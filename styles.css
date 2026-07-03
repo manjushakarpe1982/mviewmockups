@@ -1,0 +1,375 @@
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --text: #11223a;
+  --muted: #5d6b82;
+  --primary: #1b6ef3;
+  --primary-dark: #0f4fb5;
+  --accent: #dce9ff;
+  --border: #dbe3f0;
+  --success: #e9f7ef;
+  --shadow: 0 24px 60px rgba(17, 34, 58, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #edf4ff 0%, var(--bg) 34%, #ffffff 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero,
+main {
+  padding: 0 24px;
+}
+
+.nav,
+.hero-content,
+.catalog,
+.steps,
+.registration {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+}
+
+.brand {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nav-cta,
+.primary-button,
+.secondary-button,
+.registration-form button,
+.mineral-card a {
+  border-radius: 999px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.nav-cta,
+.primary-button,
+.registration-form button {
+  background: var(--primary);
+  color: #fff;
+}
+
+.nav-cta,
+.primary-button,
+.secondary-button,
+.registration-form button,
+.mineral-card a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-cta,
+.primary-button,
+.secondary-button,
+.registration-form button {
+  padding: 14px 22px;
+}
+
+.nav-cta:hover,
+.primary-button:hover,
+.registration-form button:hover {
+  background: var(--primary-dark);
+}
+
+.secondary-button,
+.mineral-card a {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+}
+
+.secondary-button:hover,
+.mineral-card a:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 32px;
+  padding: 48px 0 72px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-copy h1,
+.section-heading h2,
+.registration-copy h2 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  max-width: 12ch;
+}
+
+.hero-text,
+.section-heading p,
+.step-card p,
+.mineral-card p,
+.registration-copy p,
+.benefits p,
+.form-note,
+.panel-copy,
+.hero-points li {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.hero-text {
+  max-width: 62ch;
+  margin: 20px 0 0;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.hero-points {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.hero-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.panel-card,
+.mineral-card,
+.step-card,
+.registration-form,
+.registration-copy {
+  background: var(--surface);
+  border: 1px solid rgba(219, 227, 240, 0.9);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.panel-card {
+  padding: 24px;
+}
+
+.panel-card h2 {
+  margin: 4px 0 10px;
+  font-size: 3rem;
+}
+
+.panel-label,
+.tag,
+.step-card span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.panel-card-accent {
+  background: linear-gradient(180deg, #1d4ed8 0%, #163fa9 100%);
+  color: #fff;
+}
+
+.panel-card-accent .panel-copy,
+.panel-card-accent .panel-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.catalog,
+.steps,
+.registration {
+  padding: 48px 0 84px;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.mineral-grid,
+.step-grid,
+.benefits {
+  display: grid;
+  gap: 20px;
+}
+
+.mineral-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mineral-card,
+.step-card,
+.registration-copy,
+.registration-form {
+  padding: 28px;
+}
+
+.tag {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--primary-dark);
+}
+
+.mineral-card h3,
+.step-card h3 {
+  margin: 18px 0 10px;
+  font-size: 1.4rem;
+}
+
+.mineral-card ul {
+  margin: 18px 0 22px;
+  padding-left: 18px;
+  color: var(--muted);
+  display: grid;
+  gap: 8px;
+}
+
+.mineral-card a {
+  width: fit-content;
+  padding: 12px 18px;
+}
+
+.step-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.step-card span {
+  color: var(--primary);
+}
+
+.registration {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: 24px;
+  align-items: start;
+}
+
+.benefits {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 24px;
+}
+
+.registration-form {
+  display: grid;
+  gap: 16px;
+}
+
+.registration-form label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.registration-form input,
+.registration-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font: inherit;
+  color: var(--text);
+  background: #fff;
+}
+
+.registration-form input:focus,
+.registration-form select:focus {
+  outline: 3px solid rgba(27, 110, 243, 0.18);
+  border-color: var(--primary);
+}
+
+.form-note {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 920px) {
+  .hero-content,
+  .registration,
+  .mineral-grid,
+  .step-grid,
+  .benefits {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  main {
+    padding: 0 16px;
+  }
+
+  .nav,
+  .nav-links {
+    flex-direction: column;
+  }
+
+  .nav {
+    gap: 14px;
+  }
+
+  .hero-copy h1 {
+    max-width: none;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .registration-form button {
+    width: 100%;
+  }
+}

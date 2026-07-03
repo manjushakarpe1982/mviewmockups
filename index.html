@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mineral View | MView Mockups</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <a class="brand" href="#top">MView</a>
+      <div class="nav-links">
+        <a href="#catalog">Minerals</a>
+        <a href="#steps">How it works</a>
+        <a class="nav-cta" href="#register">Register</a>
+      </div>
+    </nav>
+
+    <section class="hero-content" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Better mineral discovery</p>
+        <h1>Find the right mineral faster and register in one smooth flow.</h1>
+        <p class="hero-text">
+          Explore featured minerals, compare use cases at a glance, and move straight into a short registration form built to convert interest into signups.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#catalog">Browse minerals</a>
+          <a class="secondary-button" href="#register">Quick registration</a>
+        </div>
+        <ul class="hero-points">
+          <li>Focused mineral cards with primary applications</li>
+          <li>Simple 3-step flow from browsing to signup</li>
+          <li>Fast registration form with pre-qualified interest</li>
+        </ul>
+      </div>
+
+      <aside class="hero-panel">
+        <div class="panel-card">
+          <p class="panel-label">This week</p>
+          <h2>+24%</h2>
+          <p class="panel-copy">Potential lift from shortening the mineral-to-registration journey.</p>
+        </div>
+        <div class="panel-card panel-card-accent">
+          <p class="panel-label">Popular request</p>
+          <strong>Industrial minerals</strong>
+          <p class="panel-copy">High-intent users can jump directly to the registration form with their preferred category selected.</p>
+        </div>
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="catalog" id="catalog">
+      <div class="section-heading">
+        <p class="eyebrow">Featured mineral view</p>
+        <h2>Browse the minerals users ask for most</h2>
+        <p>Each card highlights value, applications, and a direct call-to-action to keep users moving forward.</p>
+      </div>
+
+      <div class="mineral-grid">
+        <article class="mineral-card">
+          <span class="tag">High demand</span>
+          <h3>Quartz</h3>
+          <p>Ideal for glass, electronics, and engineered stone manufacturing.</p>
+          <ul>
+            <li>High purity options</li>
+            <li>Trusted supply chain</li>
+            <li>Fast turnaround quotes</li>
+          </ul>
+          <a href="#register">Register interest</a>
+        </article>
+
+        <article class="mineral-card">
+          <span class="tag">Construction</span>
+          <h3>Feldspar</h3>
+          <p>Well-suited for ceramics, fillers, and industrial manufacturing processes.</p>
+          <ul>
+            <li>Multiple grade variants</li>
+            <li>Application-led filtering</li>
+            <li>Bulk order support</li>
+          </ul>
+          <a href="#register">Register interest</a>
+        </article>
+
+        <article class="mineral-card">
+          <span class="tag">Industrial</span>
+          <h3>Bentonite</h3>
+          <p>Popular for drilling, foundry, absorbents, and sealing applications.</p>
+          <ul>
+            <li>Use-case first messaging</li>
+            <li>Clear product fit</li>
+            <li>Dedicated onboarding CTA</li>
+          </ul>
+          <a href="#register">Register interest</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps" id="steps">
+      <div class="section-heading">
+        <p class="eyebrow">Friction-free flow</p>
+        <h2>A simple path designed to increase registrations</h2>
+      </div>
+
+      <div class="step-grid">
+        <article class="step-card">
+          <span>01</span>
+          <h3>Scan minerals</h3>
+          <p>Users quickly understand what each mineral is for without opening multiple pages.</p>
+        </article>
+        <article class="step-card">
+          <span>02</span>
+          <h3>Choose an application</h3>
+          <p>Use-case details help qualify interest and reduce hesitation before signup.</p>
+        </article>
+        <article class="step-card">
+          <span>03</span>
+          <h3>Register instantly</h3>
+          <p>A compact form captures leads at the moment of intent with fewer fields.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="registration" id="register">
+      <div class="registration-copy">
+        <p class="eyebrow">Registration first</p>
+        <h2>Turn mineral interest into qualified registrations</h2>
+        <p>Keep the form short, capture the mineral category, and give users a clear reason to submit.</p>
+        <div class="benefits">
+          <div>
+            <strong>Fast follow-up</strong>
+            <p>Collect the essential details needed for the sales or sourcing team to respond quickly.</p>
+          </div>
+          <div>
+            <strong>Higher intent</strong>
+            <p>Pre-selecting mineral interest helps segment users and personalize the next step.</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="registration-form">
+        <label>
+          Full name
+          <input type="text" name="name" placeholder="Enter your full name">
+        </label>
+        <label>
+          Business email
+          <input type="email" name="email" placeholder="you@company.com">
+        </label>
+        <label>
+          Company
+          <input type="text" name="company" placeholder="Company name">
+        </label>
+        <label>
+          Interested mineral
+          <select name="mineral">
+            <option>Quartz</option>
+            <option>Feldspar</option>
+            <option>Bentonite</option>
+            <option>Other industrial minerals</option>
+          </select>
+        </label>
+        <button type="submit">Register now</button>
+        <p class="form-note">By registering, users can receive tailored mineral options and a faster response.</p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
