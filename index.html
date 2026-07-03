@@ -140,21 +140,21 @@
       </div>
 
       <form class="registration-form">
-        <label>
+        <label for="full-name">
           Full name
-          <input type="text" name="name" placeholder="Enter your full name" autocomplete="name" required>
+          <input id="full-name" type="text" name="name" placeholder="Enter your full name" autocomplete="name" required>
         </label>
-        <label>
+        <label for="business-email">
           Business email
-          <input type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+          <input id="business-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
         </label>
-        <label>
+        <label for="company-name">
           Company
-          <input type="text" name="company" placeholder="Company name" autocomplete="organization" required>
+          <input id="company-name" type="text" name="company" placeholder="Company name" autocomplete="organization" required>
         </label>
-        <label>
+        <label for="mineral-interest">
           Interested mineral
-          <select name="mineral" required aria-describedby="mineral-help">
+          <select id="mineral-interest" name="mineral" required aria-describedby="mineral-help">
             <option value="" selected disabled hidden>Select a mineral</option>
             <option value="quartz">Quartz</option>
             <option value="feldspar">Feldspar</option>
@@ -169,10 +169,14 @@
     </section>
   </main>
   <script>
-    document.querySelector(".registration-form").addEventListener("submit", function (event) {
-      event.preventDefault();
-      window.location.href = "thank-you.html";
-    });
+    const registrationForm = document.querySelector(".registration-form");
+
+    if (registrationForm) {
+      registrationForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        window.location.href = "thank-you.html";
+      });
+    }
   </script>
 </body>
 </html>
