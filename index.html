@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <form class="registration-form" action="thank-you.html" method="get">
+      <form class="registration-form" action="thank-you.html" method="post">
         <label>
           Full name
           <input type="text" name="name" placeholder="Enter your full name" autocomplete="name" required>
@@ -154,18 +154,25 @@
         </label>
         <label>
           Interested mineral
-          <select name="mineral" required>
+          <select name="mineral" required aria-describedby="mineral-help">
             <option value="" selected disabled hidden>Select a mineral</option>
             <option value="quartz">Quartz</option>
             <option value="feldspar">Feldspar</option>
             <option value="bentonite">Bentonite</option>
             <option value="other-industrial-minerals">Other industrial minerals</option>
           </select>
+          <span class="field-help" id="mineral-help">Select the mineral you want information about before registering.</span>
         </label>
         <button type="submit">Register now</button>
         <p class="form-note">By registering, users can receive tailored mineral options and a faster response.</p>
       </form>
     </section>
   </main>
+  <script>
+    document.querySelector(".registration-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      window.location.href = "thank-you.html";
+    });
+  </script>
 </body>
 </html>

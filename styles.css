@@ -313,6 +313,12 @@ main {
   font-weight: 600;
 }
 
+.field-help {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 400;
+}
+
 .registration-form input,
 .registration-form select {
   width: 100%;
