@@ -28,8 +28,8 @@
   .navbtns{display:flex;gap:14px;align-items:center}
   .btn-reg{background:var(--teal);color:#fff;border:none;font-weight:700;padding:11px 26px;border-radius:9px;font-size:16.5px;cursor:pointer;box-shadow:0 2px 12px rgba(0,196,167,.45)}
   .btn-reg:hover{background:var(--teal-dark)}
-  .btn-login{background:#57D9B8;color:#fff;border:none;font-weight:600;padding:11px 30px;border-radius:9px;font-size:16.5px;cursor:pointer}
-  .btn-login:hover{filter:brightness(1.05)}
+  .btn-login{background:transparent;color:#57D9B8;border:2px solid #57D9B8;font-weight:600;padding:9px 28px;border-radius:9px;font-size:16.5px;cursor:pointer}
+  .btn-login:hover{background:rgba(87,217,184,.12)}
 
   /* ===== HERO — real banner image (text + CTA baked in) ===== */
   .hero{position:relative;line-height:0;cursor:pointer}
@@ -39,13 +39,6 @@
   .dots i.on{width:38px;background:var(--teal)}
   .heroarrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px}
   .heroarrow.l{left:16px}.heroarrow.r{right:16px}
-
-  /* CTA strip below hero */
-  .ctastrip{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;gap:26px;padding:20px 24px;flex-wrap:wrap}
-  .ctastrip b{font-size:20px;font-weight:600}
-  .ctastrip button{background:var(--teal);border:none;color:#fff;font-size:18px;font-weight:700;padding:13px 34px;border-radius:10px;cursor:pointer;box-shadow:0 3px 14px rgba(0,196,167,.5)}
-  .ctastrip button:hover{background:var(--teal-dark)}
-  .ctastrip small{display:block;font-weight:300;font-size:14px;color:#B9C6CF;margin-top:3px}
 
   /* key features */
   .kf{max-width:1220px;margin:0 auto;padding:56px 20px 76px;text-align:center}
@@ -230,11 +223,6 @@
       <div class="heroarrow l">‹</div><div class="heroarrow r">›</div>
       <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
     </section>
-
-    <div class="ctastrip">
-      <div><b>New to Mineral View? See what your minerals are worth — free.</b><small>Free forever plan · No credit card · Takes about a minute</small></div>
-      <button onclick="startReg()">Free Registration →</button>
-    </div>
 
     <section class="kf">
       <h2>Key Features</h2>
