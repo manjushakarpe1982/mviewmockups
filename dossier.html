@@ -462,8 +462,15 @@
     ];
     var COLOR = {on:"#008F7A", off:"#9AA7A4", warn:"#E08A2E"};
     var map = L.map("map", {scrollWheelZoom:false});
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:17}).addTo(map);
+    // Same basemap family as mineralview.com/map (Esri): Streets default, themes switchable
+    var esriAttr = 'Tiles &copy; Esri';
+    var BASEMAPS = {
+      "Streets": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "Satellite": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "Topographic": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "OpenStreetMap": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 17})
+    };
+    BASEMAPS["Streets"].addTo(map);
     var bounds = [];
     var wellLayer = L.layerGroup().addTo(map);
     var actLayer = L.layerGroup().addTo(map);
@@ -485,7 +492,7 @@
     [[32.759639903,-94.583995785],[32.742381061,-94.583746646]].forEach(function (c) {
       L.circle(c, {radius:1609, color:"#E08A2E", weight:1.5, dashArray:"5 5", fill:false}).addTo(wellLayer);
     });
-    L.control.layers(null, {"Your wells": wellLayer, "Recent filings": actLayer}, {collapsed:false}).addTo(map);
+    L.control.layers(BASEMAPS, {"Your wells": wellLayer, "Recent filings": actLayer}, {collapsed:true}).addTo(map);
     map.fitBounds(bounds, {padding:[36, 36]});
 
     // "Show on map" links in alert cards
