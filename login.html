@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mineral View — Login (Mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#00C4A7; --teal-dark:#00A38B; --teal-soft:#E6F9F5;
+    --navy:#0B1220; --ink:#22313F; --muted:#7A8894; --line:#E3E8EC;
+    --mint-bg:#F4FBF9; --danger:#e5484d; --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Lexend Deca','Segoe UI',system-ui,sans-serif;background:var(--navy);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .panel{background:#fff;border-radius:18px;max-width:420px;width:100%;padding:40px 42px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .logo{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+  .logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 200deg,#00C4A7,#7CE577,#00C4A7);display:flex;align-items:center;justify-content:center;color:#0B1220;font-weight:800;font-size:15px}
+  .logo b{font-size:19px;letter-spacing:.04em;color:var(--ink)}
+  .logo b span{color:var(--teal)}
+  h1{font-size:22px;color:var(--ink);margin-bottom:4px}
+  .sub{color:var(--muted);font-weight:300;font-size:14.5px;margin-bottom:24px}
+  label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin:14px 0 6px}
+  input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15.5px;font-family:inherit;outline:none;transition:.15s}
+  input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,196,167,.18)}
+  button{width:100%;margin-top:22px;background:var(--teal);color:#fff;border:none;font-weight:700;padding:13px;border-radius:10px;font-size:16px;cursor:pointer;font-family:inherit;box-shadow:0 2px 12px rgba(0,196,167,.45)}
+  button:hover{background:var(--teal-dark)}
+  .err{display:none;color:var(--danger);font-size:13.5px;margin-top:12px}
+  .hint{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);font-weight:300;line-height:1.6}
+  .hint code{background:var(--teal-soft);color:var(--teal-dark);padding:1px 7px;border-radius:6px;font-size:12.5px;font-weight:600;font-family:inherit}
+  .mock{margin-top:14px;font-size:11.5px;color:#A8B3BC;font-weight:300}
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="logo"><div class="mark">M</div><b>MINERAL <span>VIEW</span></b></div>
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to view your portfolio and mineral report.</p>
+    <form id="f">
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••••" required>
+      <button type="submit">Login</button>
+      <p class="err" id="err">That email or password doesn't match. Try the demo credentials below.</p>
+    </form>
+    <div class="hint">
+      <b>Demo credentials</b><br>
+      Email: <code>demo@mineralview.com</code><br>
+      Password: <code>dossier2026</code>
+    </div>
+    <p class="mock">Internal UI mockup · sample data only · not the live product</p>
+  </div>
+<script>
+  document.getElementById('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = document.getElementById('email').value.trim().toLowerCase() === 'demo@mineralview.com'
+          && document.getElementById('pw').value === 'dossier2026';
+    if (ok) { sessionStorage.setItem('mv_demo', '1'); location.href = 'dashboard.html'; }
+    else { document.getElementById('err').style.display = 'block'; }
+  });
+</script>
+</body>
+</html>
