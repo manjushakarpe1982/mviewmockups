@@ -47,7 +47,7 @@
   .logout:hover{color:var(--ink);border-color:var(--muted)}
 
   /* ===== REPORT ===== */
-  .content{padding:24px 30px 70px;max-width:920px}
+  .content{padding:24px 30px 70px;max-width:920px;margin:0 auto}
   .rhead{background:var(--navy);color:#fff;border-radius:var(--radius);padding:26px 28px 24px;position:relative;overflow:hidden}
   .rhead::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,167,.16),transparent 70%)}
   .rhead .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -119,6 +119,13 @@
   .legend .lg-on{background:#008F7A}
   .legend .lg-off{background:#9AA7A4}
   .legend .lg-warn{background:#E08A2E}
+  .legend .lg-act{background:#3C6FD1;border-radius:2px;transform:rotate(45deg)}
+  .actpin{width:13px;height:13px;background:#3C6FD1;border:2px solid #fff;border-radius:3px;transform:rotate(45deg);box-shadow:0 0 0 1px rgba(0,0,0,.2);position:relative}
+  .actpin::after{content:"";position:absolute;inset:-7px;border:2px solid rgba(60,111,209,.55);border-radius:5px;animation:pulse 2s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.actpin::after{animation:none;opacity:.4}}
+  .showmap{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:600;color:var(--teal-dark);cursor:pointer}
+  .showmap:hover{text-decoration:underline}
   .leaflet-popup-content{font-family:'Lexend Deca',sans-serif;font-size:13px;line-height:1.5}
   .leaflet-popup-content b{font-size:13.5px}
   .leaflet-popup-content .pc-sub{color:#7A8894;font-size:12px}
@@ -204,13 +211,14 @@
 
       <section id="map-section">
         <h2>Where your property sits</h2>
-        <p class="sub">Every dot is a well you hold an interest in, placed at its state-recorded location. Click a dot for details. Your holdings span South Texas (Goliad), North Texas (Johnson), and East Texas (Marion).</p>
+        <p class="sub">Every dot is a well you hold an interest in, placed at its state-recorded location. Blue diamonds are recent permit filings near your property — the same events listed under Activity alerts below. Click anything for details.</p>
         <div id="map"></div>
         <div class="legend">
           <span><i class="lg-on"></i> Producing</span>
           <span><i class="lg-off"></i> Inactive</span>
           <span><i class="lg-warn"></i> Needs a look</span>
-          <span style="margin-left:auto">Well locations: Texas RRC records</span>
+          <span><i class="lg-act"></i> Recent filing nearby (approx.)</span>
+          <span style="margin-left:auto">Locations: Texas RRC records</span>
         </div>
         <div class="note warn" style="margin-top:14px">
           <p><b>Notice the two orange dots in East Texas sitting 55 miles apart?</b> That's the Alvis question made visible: your claim places lease 15806 in Marion County (lower dot, "Alvis #1"), but the state's production record for that lease number points to the Bryans Mill Unit in Cass County (upper dot, "Well #20"). The map is why we suggest confirming this one against your paperwork.</p>
@@ -335,11 +343,22 @@
         </div>
 
         <div class="alert">
+          <div class="when"><b>Jun 17</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag permit">2 new permits</span>
+            <h4>RFE Operating filed two more horizontal wells near your Marion tracts</h4>
+            <p><b>Commodores #1H</b> and <b>Trash Pandas #1H</b>, both new drills in the Woodlawn (Cotton Valley) field — three weeks ago. The drilling push in your Marion County area is still going.</p>
+            <span class="showmap" onclick="return showOnMap('ev-rfe')">📍 Show on map</span>
+          </div>
+        </div>
+
+        <div class="alert">
           <div class="when"><b>May 31</b><small>2026</small></div>
           <div class="body">
             <span class="tag permit">New drill permit</span>
             <h4>Halliburton filed to drill a new well in Johnson County</h4>
-            <p><b>Three Tracts #1</b> (Wildcat field) — a fresh new-drill permit in the county where your four Clear Creek wells sit. New drilling nearby is usually a sign of continued operator interest in the area.</p>
+            <p><b>Three Tracts #1</b> (Wildcat field), about 15 miles from your Clear Creek wells. New drilling nearby is usually a sign of continued operator interest in the area.</p>
+            <span class="showmap" onclick="return showOnMap('ev-hal')">📍 Show on map</span>
           </div>
         </div>
 
@@ -349,6 +368,7 @@
             <span class="tag permit">Permit</span>
             <h4>Recompletion permit filed in Goliad County</h4>
             <p><b>Alta Vista #1</b> (Riverdale/Luling field), filed by Viper S.W.D. — routine activity, but it keeps Goliad on the active list alongside your Simmons Gas Unit tracts.</p>
+            <span class="showmap" onclick="return showOnMap('ev-vip')">📍 Show on map</span>
           </div>
         </div>
 
@@ -366,7 +386,8 @@
           <div class="body">
             <span class="tag permit">3 new permits</span>
             <h4>TC Oil filed three permits on Duke Ranch, Goliad County</h4>
-            <p>Two <b>new drills</b> (Wildcat) and one <b>re-entry</b> (Sarco Creek) filed the same day — a meaningful burst of drilling interest in your Simmons Gas Unit's county.</p>
+            <p>Two <b>new drills</b> (Wildcat) and one <b>re-entry</b> (Sarco Creek) filed the same day — plus four more Duke Ranch permits earlier this year. A meaningful burst of drilling interest close to your Simmons Gas Unit.</p>
+            <span class="showmap" onclick="return showOnMap('ev-tc')">📍 Show on map</span>
           </div>
         </div>
 
@@ -375,7 +396,8 @@
           <div class="body">
             <span class="tag campaign">Drilling campaign</span>
             <h4>RFE Operating is drilling horizontals in Marion County</h4>
-            <p>At least <b>five horizontal new-drill permits</b> in the Woodlawn (Cotton Valley) field — the county of your Morris and Alvis tracts. State records show <b>11 permits on file within one mile of Morris</b> and 6 within a mile of Alvis. Rising activity here is one more reason to get those two records confirmed: active areas attract offers, and you'll want your paperwork straight first.</p>
+            <p><b>Seven-plus horizontal new-drill permits since October</b> in the Woodlawn (Cotton Valley) field — the county of your Morris and Alvis tracts — and still going as of June 2026. State records show <b>11 permits on file within one mile of Morris</b> and 6 within a mile of Alvis. Rising activity here is one more reason to get those two records confirmed: active areas attract offers, and you'll want your paperwork straight first.</p>
+            <span class="showmap" onclick="return showOnMap('ev-rfe')">📍 Show on map</span>
           </div>
         </div>
 
@@ -431,22 +453,48 @@
       {lat:32.742381061, lon:-94.583746646, st:"warn", t:"Alvis #1 (lease 15806)", s:"Marion County · your claim location · 6 permits within 1 mile"},
       {lat:33.234372289, lon:-94.472534201, st:"warn", t:"Bryans Mill Unit #20", s:"Cass County · where the STATE record for lease 15806 points · inactive since 2013"}
     ];
+    // Recent filings near her property — locations approximate (RRC nearest-town)
+    var EVENTS = [
+      {id:"ev-hal", lat:32.4063, lon:-97.2117, t:"New-drill permit — Three Tracts #1", s:"Filed 05/31/2026 by Halliburton Energy Services · Wildcat field · Johnson County, ~15 mi from your Clear Creek wells · location approximate (nearest town: Alvarado)"},
+      {id:"ev-rfe", lat:32.6779, lon:-94.1702, t:"RFE Operating drilling campaign", s:"7+ horizontal new-drill permits Oct 2025 – Jun 2026 (two filed 06/17/2026) · Woodlawn (Cotton Valley) · Marion County, near your Morris & Alvis tracts · location approximate (nearest town: Karnack)"},
+      {id:"ev-tc",  lat:28.6686, lon:-97.3886, t:"TC Oil — Duke Ranch permits", s:"Three permits filed 03/31/2026 (two new drills + one re-entry), 4 more earlier this year · Goliad County, close to your Simmons Gas Unit · location approximate (nearest town: Goliad)"},
+      {id:"ev-vip", lat:28.6560, lon:-97.4060, t:"Recompletion permit — Alta Vista #1", s:"Filed 05/28/2026 by Viper S.W.D. · Riverdale (Luling) field · Goliad County · location approximate (nearest town: Goliad)"}
+    ];
     var COLOR = {on:"#008F7A", off:"#9AA7A4", warn:"#E08A2E"};
     var map = L.map("map", {scrollWheelZoom:false});
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:17}).addTo(map);
     var bounds = [];
+    var wellLayer = L.layerGroup().addTo(map);
+    var actLayer = L.layerGroup().addTo(map);
     WELLS.forEach(function (w) {
       bounds.push([w.lat, w.lon]);
       L.circleMarker([w.lat, w.lon], {
         radius:8, color:"#fff", weight:2, fillColor:COLOR[w.st], fillOpacity:.95
-      }).addTo(map).bindPopup("<b>" + w.t + "</b><br><span class='pc-sub'>" + w.s + "</span>");
+      }).addTo(wellLayer).bindPopup("<b>" + w.t + "</b><br><span class='pc-sub'>" + w.s + "</span>");
+    });
+    var evMarkers = {};
+    EVENTS.forEach(function (e) {
+      bounds.push([e.lat, e.lon]);
+      var m = L.marker([e.lat, e.lon], {
+        icon: L.divIcon({className:"", html:'<div class="actpin"></div>', iconSize:[13,13], iconAnchor:[7,7]})
+      }).addTo(actLayer).bindPopup("<b>" + e.t + "</b><br><span class='pc-sub'>" + e.s + "</span>");
+      evMarkers[e.id] = m;
     });
     // 1-mile radius rings on the "needs a look" tracts
     [[32.759639903,-94.583995785],[32.742381061,-94.583746646]].forEach(function (c) {
-      L.circle(c, {radius:1609, color:"#E08A2E", weight:1.5, dashArray:"5 5", fill:false}).addTo(map);
+      L.circle(c, {radius:1609, color:"#E08A2E", weight:1.5, dashArray:"5 5", fill:false}).addTo(wellLayer);
     });
+    L.control.layers(null, {"Your wells": wellLayer, "Recent filings": actLayer}, {collapsed:false}).addTo(map);
     map.fitBounds(bounds, {padding:[36, 36]});
+
+    // "Show on map" links in alert cards
+    window.showOnMap = function (id) {
+      document.getElementById("map").scrollIntoView({behavior:"smooth", block:"center"});
+      var m = evMarkers[id];
+      if (m) setTimeout(function () { m.openPopup(); }, 450);
+      return false;
+    };
   })();
 
   (function () {
