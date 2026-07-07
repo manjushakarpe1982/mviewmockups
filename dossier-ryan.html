@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mineral View — Your Mineral Report: Ryan C. (Mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --teal:#00C4A7; --teal-dark:#00A38B; --teal-deep:#008F7A; --teal-soft:#E6F9F5;
+    --navy:#0B1220; --ink:#22313F; --muted:#7A8894; --faint:#A8B3BC; --line:#E3E8EC; --line-soft:#EEF2F1;
+    --mint-bg:#F4FBF9; --orange:#FF7A1A; --amber:#B45309; --amber-soft:#FBEEDC;
+    --chart:#008F7A; --chart-fill:rgba(0,143,122,.10); --chart-end:#B45309; --grid:#E7EDEB;
+    --up:#0C9D61; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Lexend Deca','Segoe UI',system-ui,sans-serif;background:var(--mint-bg);color:var(--ink);min-height:100vh;font-size:15.5px;line-height:1.55}
+  a{text-decoration:none;color:inherit}
+  .app{display:flex;min-height:100vh}
+  .side{width:236px;background:var(--navy);color:#C9D4DE;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .side .logo{display:flex;align-items:center;gap:9px;padding:20px 18px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .side .logo .mark{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 200deg,#00C4A7,#7CE577,#00C4A7);display:flex;align-items:center;justify-content:center;color:#0B1220;font-weight:800;font-size:13px;flex-shrink:0}
+  .side .logo b{font-size:15.5px;letter-spacing:.05em;color:#fff}
+  .side .logo b span{color:var(--teal)}
+  .nav{padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;font-size:14.5px;font-weight:500;color:#C9D4DE;transition:.13s}
+  .nav a svg{width:18px;height:18px;flex-shrink:0;opacity:.85}
+  .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav a.active{background:var(--teal);color:#fff;font-weight:600}
+  .nav a .new{margin-left:auto;background:var(--orange);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.06em;border-radius:6px;padding:2px 6px}
+  .main{flex:1;min-width:0}
+  .top{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:stretch;position:sticky;top:0;z-index:40}
+  .tick{display:flex}
+  .tick .t{padding:12px 22px;border-right:1px solid var(--line)}
+  .tick .t .n{font-size:13px;color:var(--muted);font-weight:500}
+  .tick .t .v{font-size:15.5px;font-weight:700}
+  .tick .t .v em{font-style:normal;font-size:12px;color:var(--up);margin-left:6px}
+  .top .right{margin-left:auto;display:flex;align-items:center;gap:14px;padding:0 24px}
+  .top .hi{font-weight:600;font-size:15px}
+  .ownersel{font-family:inherit;font-size:13px;font-weight:600;color:var(--teal-dark);border:1.5px solid var(--teal);border-radius:9px;padding:7px 10px;background:#fff;cursor:pointer}
+  .logout{font-size:12.5px;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+  .logout:hover{color:var(--ink);border-color:var(--muted)}
+  .content{padding:24px 30px 70px;max-width:920px;margin:0 auto}
+  .rhead{background:var(--navy);color:#fff;border-radius:var(--radius);padding:26px 28px 24px;position:relative;overflow:hidden}
+  .rhead::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,167,.16),transparent 70%)}
+  .rhead .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .rhead .bn{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700}
+  .proto{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#E8B04B;border:1px solid #E8B04B;border-radius:5px;padding:2px 8px}
+  .dl{margin-left:auto;background:var(--teal);color:#fff;font-weight:600;font-size:13px;border-radius:9px;padding:9px 16px;position:relative;z-index:1}
+  .dl:hover{background:var(--teal-dark)}
+  .rhead h1{font-size:clamp(26px,4.5vw,34px);font-weight:800;margin:14px 0 4px}
+  .rhead .prep{color:#C7D2CE;font-size:14.5px}
+  .rhead .prep b{color:#fff;font-weight:600}
+  .rhead .asof{margin-top:10px;font-size:12.5px;color:#93A5A0;max-width:70ch;line-height:1.55}
+  .rhead .asof b{color:#C7D2CE}
+  h2{font-size:22px;font-weight:700;margin:42px 0 6px}
+  h3{font-size:16.5px;font-weight:600;margin:0 0 4px}
+  p{margin:10px 0;max-width:70ch}
+  .lede{font-size:16.5px}
+  .sub{color:var(--muted);font-weight:300;font-size:13.5px;margin-top:0}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+  .tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .tile .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .tile .v{font-size:25px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tile .d{font-size:12px;color:var(--muted);font-weight:300;margin-top:2px}
+  .tile.money .v{color:var(--teal-dark)}
+  .chip{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 10px;vertical-align:2px;margin-left:8px}
+  .chip.on{background:var(--teal-soft);color:var(--teal-dark)}
+  .chip.off{background:#EEF1F3;color:var(--muted)}
+  .chip.warn{background:var(--amber-soft);color:var(--amber)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .meta{color:var(--muted);font-size:13.5px;margin:2px 0 12px;font-weight:300}
+  .meta b{color:var(--ink);font-weight:600}
+  .sparkrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+  .spark{border:1px solid var(--line-soft);border-radius:10px;padding:12px 14px 8px}
+  .spark .t{font-size:13px;font-weight:600}
+  .spark .s{font-size:11.5px;color:var(--muted);font-weight:300;margin-bottom:4px}
+  .spark svg{width:100%;height:74px;display:block}
+  .spark .foot{font-size:11px;color:var(--faint);font-weight:300;margin-top:2px}
+  .tablewrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+  th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;background:var(--teal);color:#fff;font-weight:600;border-bottom:none}
+  td.num,th.num{text-align:right}
+  tr:last-child td{border-bottom:none}
+  tr.total td{border-top:2px solid var(--line);font-weight:700}
+  .dim td{color:var(--muted)}
+  .note{border-left:3px solid var(--teal);background:var(--teal-soft);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:14px}
+  .note.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+  .note p{margin:6px 0}
+  .note .nt{font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase}
+  ul{padding-left:20px;max-width:70ch}
+  li{margin:6px 0}
+  .src{border-top:1px solid var(--line);margin-top:50px;padding-top:18px;font-size:12.5px;color:var(--muted);font-weight:300}
+  .src p{margin:6px 0;max-width:none}
+  .src b{font-weight:600}
+  #map{height:440px;border-radius:12px;border:1px solid var(--line);z-index:1}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+  .legend .lg-on{background:#008F7A}
+  .legend .lg-off{background:#9AA7A4}
+  .legend .lg-act{background:#3C6FD1;border-radius:2px;transform:rotate(45deg)}
+  .actpin{width:13px;height:13px;background:#3C6FD1;border:2px solid #fff;border-radius:3px;transform:rotate(45deg);box-shadow:0 0 0 1px rgba(0,0,0,.2);position:relative}
+  .actpin::after{content:"";position:absolute;inset:-7px;border:2px solid rgba(60,111,209,.55);border-radius:5px;animation:pulse 2s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.actpin::after{animation:none;opacity:.4}}
+  .leaflet-popup-content{font-family:'Lexend Deca',sans-serif;font-size:13px;line-height:1.5}
+  .leaflet-popup-content b{font-size:13.5px}
+  .leaflet-popup-content .pc-sub{color:#7A8894;font-size:12px}
+  .alertbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 4px}
+  .mailtoggle{display:flex;align-items:center;gap:9px;background:var(--teal-soft);border:1px solid #BFEDE3;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--teal-dark)}
+  .mailtoggle .knob{width:34px;height:19px;border-radius:999px;background:var(--teal);position:relative;flex-shrink:0}
+  .mailtoggle .knob::after{content:"";position:absolute;right:2.5px;top:2.5px;width:14px;height:14px;border-radius:50%;background:#fff}
+  .alert{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin:10px 0;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .alert .when{flex-shrink:0;width:86px;text-align:center;border-right:1px solid var(--line-soft);padding-right:14px}
+  .alert .when b{display:block;font-size:15px}
+  .alert .when small{color:var(--muted);font-weight:300;font-size:11.5px}
+  .alert .body{min-width:0}
+  .alert .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:6px;padding:2px 8px;margin-bottom:5px}
+  .alert .tag.permit{background:var(--teal-soft);color:var(--teal-dark)}
+  .alert .tag.prod{background:var(--amber-soft);color:var(--amber)}
+  .alert .tag.campaign{background:#EFF5FE;color:#3C6FD1}
+  .alert h4{font-size:15px;font-weight:600;margin:0 0 3px}
+  .alert p{margin:2px 0 0;font-size:13.5px;color:var(--muted);font-weight:300;max-width:66ch}
+  .alert p b{color:var(--ink);font-weight:600}
+  .showmap{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:600;color:var(--teal-dark);cursor:pointer}
+  .showmap:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="logo"><div class="mark">M</div><b>MINERAL <span>VIEW</span></b></div>
+    <nav class="nav">
+      <a href="dashboard-ryan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v13H4z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>My Portfolio</a>
+      <a class="active" href="dossier-ryan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Field Reports</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Activities</a>
+      <a href="#map-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 15.2c2.8.2 5 1.9 5 4.8"/></svg>Community</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5c-2-1.5-5-1.5-8 0v14c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V5c-3-1.5-6-1.5-8 0z"/><path d="M12 5v14"/></svg>Knowledge Center</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-.9 1.7M12 17h.01"/></svg>FAQ</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact Us</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="tick">
+        <div class="t"><div class="n">Brent Oil</div><div class="v">$72.86<em>▲ 1.21%</em></div></div>
+        <div class="t"><div class="n">Natural Gas</div><div class="v">$3.291<em>▲ 1.42%</em></div></div>
+        <div class="t"><div class="n">WTI Crude</div><div class="v">$69.35<em>▲ 1.17%</em></div></div>
+      </div>
+      <div class="right">
+        <select class="ownersel" onchange="location.href=this.value" title="Switch owner">
+          <option value="dossier.html">Owner: Shannon D.</option>
+          <option value="dossier-ryan.html" selected>Owner: Ryan C.</option>
+        </select>
+        <span class="hi">Hi, Ryan</span>
+        <span class="logout" onclick="sessionStorage.removeItem('mv_demo');location.href='login.html'">Log out</span>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <header class="rhead">
+        <div class="row">
+          <span class="bn">Mineral View</span>
+          <span class="proto">Prototype · Internal review</span>
+          <a class="dl" href="#" onclick="window.print();return false">⬇ Download PDF</a>
+        </div>
+        <h1>Your Mineral Report</h1>
+        <p class="prep">Prepared for <b>Ryan C.</b> · July 7, 2026</p>
+        <p class="asof">Production figures come from operator filings with the Texas Railroad Commission, complete through <b>April 2026</b>. Operators file two to three months behind, so the most recent weeks aren't reported yet — that's normal, not a problem with your wells.</p>
+      </header>
+
+      <section>
+        <h2>The short version</h2>
+        <p class="lede">You hold royalty interests in <b>105 leases across 18 Texas counties</b> — 46 of them producing today. We estimate your combined share is worth roughly <b>$9.3 million to $13.2 million</b>.</p>
+
+        <div class="tiles">
+          <div class="tile"><div class="k">Properties</div><div class="v">105</div><div class="d">leases you've claimed</div></div>
+          <div class="tile"><div class="k">Counties</div><div class="v">18</div><div class="d">Austin &amp; Grimes lead on value</div></div>
+          <div class="tile"><div class="k">Producing now</div><div class="v">46</div><div class="d">45 of 46 operated by Magnolia</div></div>
+          <div class="tile money"><div class="k">Est. value of your share</div><div class="v">$10.96M</div><div class="d">range $9.3M – $13.2M · <em>estimate</em>*</div></div>
+        </div>
+
+        <p><b>Your portfolio has two distinct halves.</b> In Austin, Grimes, Brazos and Montgomery counties you own <b>large interests (78–85%)</b> in Giddings / Austin Chalk gas units — that's where ~95% of your value sits. Across the Eagle Ford (Karnes, De Witt, Gonzales, Fayette) you hold <b>small slivers (0.02–0.8%)</b> of very high-volume units — individually small, but they sit in the most actively drilled counties in Texas, which is why the alerts below matter.</p>
+        <p><b>What deserves a look:</b> your largest holding's production dipped sharply this spring, one lease has a valuation-model error (excluded from your total, flagged to our data team), and 56 of your leases have no state production record — details below.</p>
+      </section>
+
+      <section id="map-section">
+        <h2>Where your property sits</h2>
+        <p class="sub">One dot per lease at its state-recorded well location. Blue diamonds are recent permit filings near your holdings — same events as the alerts below. Click anything for details.</p>
+        <div id="map"></div>
+        <div class="legend">
+          <span><i class="lg-on"></i> Producing</span>
+          <span><i class="lg-off"></i> Inactive</span>
+          <span><i class="lg-act"></i> Recent filing nearby (approx.)</span>
+          <span style="margin-left:auto">Locations: Texas RRC records (49 leases with well records shown)</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Your portfolio by county</h2>
+        <p class="sub">Trailing-12-month gas is the whole-lease reported volume; the value column is <b>your share</b> (whole-lease estimate × your recorded interest).</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>County</th><th class="num">Leases</th><th class="num">Producing</th><th class="num">TTM gas (Mcf)</th><th class="num">Your est. value</th><th>Main operator</th></tr></thead>
+            <tbody>
+              <tr><td>Austin</td><td class="num">10</td><td class="num">9</td><td class="num">297,394</td><td class="num"><b>$4,835,420</b></td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Grimes</td><td class="num">9</td><td class="num">8</td><td class="num">225,207</td><td class="num"><b>$3,324,901</b></td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Brazos</td><td class="num">8</td><td class="num">8</td><td class="num">125,368</td><td class="num"><b>$1,565,717</b></td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Montgomery</td><td class="num">3</td><td class="num">3</td><td class="num">243,616</td><td class="num">$641,936</td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Washington</td><td class="num">7</td><td class="num">4</td><td class="num">225,387</td><td class="num">$469,943</td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Fayette</td><td class="num">10</td><td class="num">3</td><td class="num">336,919</td><td class="num">$63,983</td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>De Witt</td><td class="num">8</td><td class="num">7</td><td class="num">1,054,542</td><td class="num">$42,915</td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr><td>Karnes</td><td class="num">14</td><td class="num">2</td><td class="num">165,715</td><td class="num">$18,175</td><td>BPX Operating</td></tr>
+              <tr><td>Gonzales</td><td class="num">10</td><td class="num">2</td><td class="num">3,600</td><td class="num">$164</td><td>Magnolia Oil &amp; Gas</td></tr>
+              <tr class="dim"><td>9 more counties (Lee, Frio, Zavala…)</td><td class="num">26</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td>no state production record</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>Your biggest producers</h2>
+        <p class="sub">The six leases carrying most of your value — all operated by Magnolia Oil &amp; Gas, all gas, all reported through April 2026. The dollar figure is the estimated value of <b>your share</b>.</p>
+        <div class="sparkrow">
+          <div class="spark" data-series="12799,11348,13259,9876,10396,12370,11996,13012,8748,11524,5409,4131">
+            <div class="t">Dierking Unit — Austin <span class="chip warn">Watch</span></div>
+            <div class="s">Your interest 85.0% · est. share <b>$2.44M</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, May 2025 to April 2026, ending at 4,131 Mcf"></svg>
+            <div class="foot">Down sharply in Mar–Apr vs ~11,500 average — see alerts</div>
+          </div>
+          <div class="spark" data-series="6597,6044,6182,6454,6070,6019,6025,6175,6220,5671,6253,6442">
+            <div class="t">East Richards Unit — Grimes <span class="chip on">Producing</span></div>
+            <div class="s">Your interest 80.0% · est. share <b>$1.00M</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, ending at 6,442 Mcf"></svg>
+            <div class="foot">Remarkably steady all year</div>
+          </div>
+          <div class="spark" data-series="5212,4468,4305,4659,4700,5909,5638,6276,6379,5840,6308,5628">
+            <div class="t">Sanders Unit — Grimes <span class="chip on">Producing</span></div>
+            <div class="s">Your interest 78.9% · est. share <b>$939K</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, ending at 5,628 Mcf"></svg>
+            <div class="foot">Trending up ~20% over the year</div>
+          </div>
+          <div class="spark" data-series="4623,3055,1480,1298,199,7271,213,6956,5167,5182,4218,388">
+            <div class="t">Stanton Unit — Brazos <span class="chip on">Producing</span></div>
+            <div class="s">Your interest 80.9% · est. share <b>$705K</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, intermittent, ending at 388 Mcf"></svg>
+            <div class="foot">Intermittent producer — months on, months near zero</div>
+          </div>
+          <div class="spark" data-series="4436,3493,2974,2642,2677,2965,3026,3270,3477,2763,2761,2719">
+            <div class="t">Goldberg Unit — Austin <span class="chip on">Producing</span></div>
+            <div class="s">Your interest 83.3% · est. share <b>$625K</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, ending at 2,719 Mcf"></svg>
+            <div class="foot">Steady around 3,000 Mcf/mo</div>
+          </div>
+          <div class="spark" data-series="5155,4566,4678,4369,4334,4182,3527,4200,4648,3957,4135,3858">
+            <div class="t">W.P.T. — Montgomery <span class="chip on">Producing</span></div>
+            <div class="s">Your interest 78.6% · est. share <b>$504K</b> · Gas, Mcf/mo</div>
+            <svg role="img" aria-label="Monthly gas, ending at 3,858 Mcf"></svg>
+            <div class="foot">Gentle decline, normal for well age</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Needs a look</h2>
+        <div class="card">
+          <div class="note warn">
+            <p class="nt">Glaeser Unit — valuation model error</p>
+            <p>Our valuation model produced an obviously wrong number for this Austin County lease (a $988M "high" estimate against a $0 mean — a model glitch, not a real value). We've <b>excluded it from your totals</b> and flagged it to the data team. The lease itself is producing normally.</p>
+          </div>
+          <div class="note warn">
+            <p class="nt">56 leases with no state production record</p>
+            <p>Mostly in Lee, Frio, Gonzales, Karnes, Zavala and West Texas counties. Common reasons: non-producing acreage, older lease numbers that were renumbered, or claims filed against the wrong district. Individually small, but worth a records pass — <b>especially the Karnes County ones</b>, given the drilling activity there (see alerts).</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What your share might be worth</h2>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Lease</th><th>County</th><th class="num">Your share</th><th class="num">Low</th><th class="num">Estimate</th><th class="num">High</th></tr></thead>
+            <tbody>
+              <tr><td>Dierking Unit</td><td>Austin</td><td class="num">84.99%</td><td class="num">$2,387,305</td><td class="num"><b>$2,440,385</b></td><td class="num">$2,493,462</td></tr>
+              <tr><td>East Richards Unit</td><td>Grimes</td><td class="num">80.04%</td><td class="num">$942,380</td><td class="num"><b>$1,004,954</b></td><td class="num">$1,067,527</td></tr>
+              <tr><td>Sanders Unit</td><td>Grimes</td><td class="num">78.85%</td><td class="num">$903,889</td><td class="num"><b>$938,815</b></td><td class="num">$973,744</td></tr>
+              <tr><td>Stanton Unit</td><td>Brazos</td><td class="num">80.90%</td><td class="num">$652,921</td><td class="num"><b>$705,120</b></td><td class="num">$757,320</td></tr>
+              <tr><td>Goldberg Unit</td><td>Austin</td><td class="num">83.25%</td><td class="num">$505,586</td><td class="num"><b>$625,401</b></td><td class="num">$745,217</td></tr>
+              <tr><td>W.P.T.</td><td>Montgomery</td><td class="num">78.60%</td><td class="num">$484,461</td><td class="num"><b>$504,113</b></td><td class="num">$523,766</td></tr>
+              <tr class="dim"><td>99 other leases (aggregated)</td><td></td><td class="num"></td><td class="num">$3,425,659</td><td class="num">$4,744,366</td><td class="num">$6,626,652</td></tr>
+              <tr class="total"><td>Total*</td><td></td><td class="num"></td><td class="num">$9,302,201</td><td class="num">$10,963,154</td><td class="num">$13,187,688</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <p class="nt">How to read these numbers</p>
+          <p><b>Recorded facts:</b> production volumes, operators, well status, and your ownership percentages come straight from Texas Railroad Commission filings and county records.</p>
+          <p><b>Estimates:</b> the dollar values are Mineral View's valuation model (updated July 6, 2026), projecting each well's future production from its decline history and market gas-price forecasts. An estimate of value — <b>not an appraisal, and not an offer</b>. *Total excludes the Glaeser Unit pending the model fix above.</p>
+        </div>
+      </section>
+
+      <section id="alerts">
+        <h2>Activity alerts</h2>
+        <div class="alertbar">
+          <p class="sub" style="margin:0">Real filings and production changes near your property, from state records. Newest first.</p>
+          <div class="mailtoggle" style="margin-left:auto"><span>Email me when something changes</span><span class="knob"></span></div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Jul 1</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag permit">6 new permits</span>
+            <h4>Your operator Magnolia filed six new drills in Washington County — last week</h4>
+            <p><b>Means C, Crimson Bear, and the Big Al series (H07/H09/H11)</b>, all horizontal new drills, filed the same day in the county where you hold 7 leases. Your operator is expanding right where you own.</p>
+            <span class="showmap" onclick="return showOnMap('ev-wash')">📍 Show on map</span>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Apr 2026</b><small>production</small></div>
+          <div class="body">
+            <span class="tag prod">Production watch</span>
+            <h4>Dierking Unit — your largest holding — dropped sharply this spring</h4>
+            <p>Gas fell to <b>5,409 Mcf in March and 4,131 in April</b>, versus a ~11,500 Mcf monthly average. Could be maintenance or curtailment — but on an 85% interest, this is the single number in your portfolio most worth watching next month.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Jun 5–22</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag campaign">Drilling wave</span>
+            <h4>Karnes County: 73 new permits in 2026 — three operators active in June alone</h4>
+            <p>Magnolia (<b>Mary #16/17/19H</b>, Jun 5), Marathon (<b>Choate, Dull Hand</b>, Jun 15), and Burlington (<b>Willeke Unit A</b>, Jun 22) all filed new horizontals. You hold 14 Karnes leases — most without production records. Active areas attract offers; get those records confirmed first.</p>
+            <span class="showmap" onclick="return showOnMap('ev-karnes')">📍 Show on map</span>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>2026</b><small>YTD</small></div>
+          <div class="body">
+            <span class="tag permit">31 completions</span>
+            <h4>De Witt County keeps completing Eagle Ford wells around your Jahn Unit tracts</h4>
+            <p>31 new completions filed in De Witt this year. Your seven Jahn Unit tracts reported over <b>1.05 million Mcf</b> in the trailing twelve months — small interest, big machine.</p>
+            <span class="showmap" onclick="return showOnMap('ev-dewitt')">📍 Show on map</span>
+          </div>
+        </div>
+
+        <p class="sub" style="margin-top:14px">In the full product these alerts refresh monthly and land in your inbox when something changes.</p>
+      </section>
+
+      <section>
+        <h2>Plain-English glossary for this report</h2>
+        <ul>
+          <li><b>Mcf</b> — a thousand cubic feet of natural gas. The standard unit on royalty statements.</li>
+          <li><b>Royalty interest</b> — your percentage share of what a well produces, paid without you paying drilling or operating costs.</li>
+          <li><b>TTM</b> — trailing twelve months: the last 12 reported months added together.</li>
+          <li><b>Decline</b> — every well produces less over time; a gentle slope is normal and expected.</li>
+        </ul>
+      </section>
+
+      <footer class="src">
+        <p><b>Sources &amp; method.</b> Production: Texas Railroad Commission lease-cycle filings, complete through April 2026 (operators file ~2–3 months behind). Ownership percentages: claimed interests as recorded with Mineral View. Valuations: Mineral View MVestimate model, updated July 6, 2026. Permit/completion activity: RRC filings, 2026 year-to-date.</p>
+        <p><b>Prototype notice.</b> This is a UI mockup generated from real Texas RRC data, for internal review on July 7, 2026.</p>
+        <p>© 2026 Mineral View · mineralview.com</p>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  if (sessionStorage.getItem('mv_demo') !== '1') {
+    if (new URLSearchParams(location.search).get('demo') === '1') sessionStorage.setItem('mv_demo', '1');
+    else location.href = 'login.html';
+  }
+
+  (function () {
+    var PINS = [[29.19124,-97.57164,"on","EDWARDS UNIT A","GONZALES"],[29.19211,-97.57118,"on","EDWARDS UNIT A","GONZALES"],[28.93817,-97.69939,"on","CROW A","KARNES"],[28.93952,-97.69822,"on","CROW A","KARNES"],[28.97783,-97.57387,"on","JAHN UNIT","DE WITT"],[28.97682,-97.57474,"on","JAHN UNIT","DE WITT"],[28.97602,-97.57725,"on","JAHN UNIT","DE WITT"],[28.97516,-97.58683,"on","JAHN UNIT","DE WITT"],[28.97465,-97.58895,"on","JAHN UNIT","DE WITT"],[28.97573,-97.58448,"on","JAHN UNIT","DE WITT"],[28.97637,-97.58179,"on","JAHN UNIT","DE WITT"],[30.24737,-96.61255,"off","FIVE STAR RANCH","WASHINGTON"],[30.50968,-96.13324,"off","MOODY","GRIMES"],[30.50509,-96.11499,"on","HUSFELD","GRIMES"],[30.48643,-96.17292,"on","SELECTED LANDS - PAVALOCK UNIT","BRAZOS"],[30.53414,-96.05872,"on","GORBET","GRIMES"],[30.49676,-96.11581,"on","BEARD OL","GRIMES"],[30.53721,-96.13302,"on","T.M.P.A.","GRIMES"],[30.55868,-96.12546,"on","SELECTED LANDS - HOUSE UNIT","GRIMES"],[30.42569,-96.16408,"on","DINKINS OL","BRAZOS"],[30.43647,-96.13937,"on","ELLIOTT OL","BRAZOS"],[30.05531,-96.44905,"on","GOLDBERG UNIT","AUSTIN"],[30.05843,-96.43984,"on","GLAESER UNIT","AUSTIN"],[30.12442,-96.42479,"on","JASTER UNIT","WASHINGTON"],[30.09556,-96.43689,"on","TIEMANN","WASHINGTON"],[30.04755,-96.40419,"on","DIERKING UNIT","AUSTIN"],[30.07622,-96.39578,"on","PEARLIE MAE UNIT","AUSTIN"],[30.0727,-96.42021,"on","RAINS TRUST UNIT","AUSTIN"],[30.05134,-96.44464,"on","GLAESER UNIT","AUSTIN"],[30.05382,-96.41413,"on","DIERKING UNIT","AUSTIN"],[30.06565,-96.45152,"on","GOLDBERG UNIT","AUSTIN"],[30.41427,-96.17329,"on","ROTELLO UNIT A","BRAZOS"],[30.06832,-96.42827,"on","RAINS TRUST UNIT","AUSTIN"],[30.05617,-96.38889,"off","PEARLIE MAE UNIT","AUSTIN"],[30.40954,-96.18687,"on","STANTON UNIT","BRAZOS"],[30.39436,-96.1692,"on","MOORE, H. H. UNIT","BRAZOS"],[30.50444,-95.82209,"on","SANDERS UNIT","GRIMES"],[30.48232,-96.14505,"on","ABSHIRE-SELECTED LANDS UNIT","BRAZOS"],[30.51144,-95.81299,"on","W.P.T.","MONTGOMERY"],[30.46631,-96.1453,"on","ABSHIRE SELECTED LANDS UNIT","BRAZOS"],[30.53322,-95.81701,"on","EAST RICHARDS UNIT","GRIMES"],[30.10275,-96.68973,"on","LYCO","FAYETTE"],[30.56377,-95.81666,"on","HOKE-COLE UNIT","GRIMES"],[30.54166,-95.80848,"on","LONGSTREET UNIT","MONTGOMERY"],[30.5647,-95.80655,"on","CHAPPEL WOODS UNIT","MONTGOMERY"],[29.8569,-96.7007,"on","TANGO","FAYETTE"],[29.89488,-96.68055,"on","RAMBO","FAYETTE"],[30.18299,-96.64436,"on","LIGER UNIT","WASHINGTON"],[30.16752,-96.71389,"on","BROUSSARD-LIEBSCHER CO-OP UNIT","WASHINGTON"]];
+    var EVENTS = [
+      {id:"ev-wash", lat:30.1669, lon:-96.3977, t:"Magnolia — 6 new-drill permits (07/01/2026)", s:"Means C, Crimson Bear, Big Al H07/H09/H11 · Washington County, where you hold 7 leases · location approximate (nearest town: Brenham)"},
+      {id:"ev-karnes", lat:28.885, lon:-97.901, t:"Karnes drilling wave — 73 permits in 2026", s:"Magnolia Mary #16/17/19H (Jun 5), Marathon Choate/Dull Hand (Jun 15), Burlington Willeke A (Jun 22) · you hold 14 Karnes leases · approximate (Karnes City)"},
+      {id:"ev-dewitt", lat:29.0939, lon:-97.2894, t:"De Witt — 31 new completions in 2026", s:"Eagle Ford completions around your Jahn Unit tracts · approximate (Cuero)"}
+    ];
+    var COLOR = {on:"#008F7A", off:"#9AA7A4", warn:"#E08A2E"};
+    var map = L.map("map", {scrollWheelZoom:false});
+    var esriAttr = 'Tiles &copy; Esri';
+    var BASEMAPS = {
+      "Streets": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "Satellite": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "Topographic": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {attribution: esriAttr, maxZoom: 17}),
+      "OpenStreetMap": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; OpenStreetMap', maxZoom: 17})
+    };
+    BASEMAPS["Streets"].addTo(map);
+    var wellLayer = L.layerGroup().addTo(map);
+    var actLayer = L.layerGroup().addTo(map);
+    var bounds = [];
+    PINS.forEach(function (p) {
+      bounds.push([p[0], p[1]]);
+      L.circleMarker([p[0], p[1]], {radius:6, color:"#fff", weight:2, fillColor:COLOR[p[2]], fillOpacity:.95})
+        .addTo(wellLayer).bindPopup("<b>" + p[3] + "</b><br><span class='pc-sub'>" + p[4] + " County · " + (p[2] === "on" ? "producing" : "inactive") + "</span>");
+    });
+    var evMarkers = {};
+    EVENTS.forEach(function (e) {
+      bounds.push([e.lat, e.lon]);
+      var m = L.marker([e.lat, e.lon], {icon: L.divIcon({className:"", html:'<div class="actpin"></div>', iconSize:[13,13], iconAnchor:[7,7]})})
+        .addTo(actLayer).bindPopup("<b>" + e.t + "</b><br><span class='pc-sub'>" + e.s + "</span>");
+      evMarkers[e.id] = m;
+    });
+    L.control.layers(BASEMAPS, {"Your wells": wellLayer, "Recent filings": actLayer}, {collapsed:true}).addTo(map);
+    map.fitBounds(bounds, {padding:[36, 36]});
+    window.showOnMap = function (id) {
+      document.getElementById("map").scrollIntoView({behavior:"smooth", block:"center"});
+      var m = evMarkers[id];
+      if (m) setTimeout(function () { m.openPopup(); }, 450);
+      return false;
+    };
+  })();
+
+  (function () {
+    var MONTHS = ["May '25","Jun '25","Jul '25","Aug '25","Sep '25","Oct '25","Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26"];
+    var NS = "http://www.w3.org/2000/svg";
+    document.querySelectorAll(".spark").forEach(function (box) {
+      var data = box.getAttribute("data-series").split(",").map(Number);
+      var svg = box.querySelector("svg");
+      var W = 300, H = 74, padL = 6, padR = 44, padT = 8, padB = 10;
+      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      svg.setAttribute("preserveAspectRatio", "none");
+      var max = Math.max.apply(null, data) * 1.08;
+      var iw = W - padL - padR, ih = H - padT - padB;
+      function x(i) { return padL + (i / (data.length - 1)) * iw; }
+      function y(v) { return padT + ih - (v / max) * ih; }
+      [1/3, 2/3].forEach(function (f) {
+        var g = document.createElementNS(NS, "line");
+        g.setAttribute("x1", padL); g.setAttribute("x2", padL + iw);
+        g.setAttribute("y1", padT + ih * f); g.setAttribute("y2", padT + ih * f);
+        g.setAttribute("stroke", "var(--grid)"); g.setAttribute("stroke-width", "1");
+        svg.appendChild(g);
+      });
+      var dArea = "M" + x(0) + "," + y(data[0]);
+      for (var i = 1; i < data.length; i++) dArea += " L" + x(i) + "," + y(data[i]);
+      dArea += " L" + x(data.length - 1) + "," + (padT + ih) + " L" + x(0) + "," + (padT + ih) + " Z";
+      var area = document.createElementNS(NS, "path");
+      area.setAttribute("d", dArea); area.setAttribute("fill", "var(--chart-fill)");
+      svg.appendChild(area);
+      var dLine = "M" + x(0) + "," + y(data[0]);
+      for (var j = 1; j < data.length; j++) dLine += " L" + x(j) + "," + y(data[j]);
+      var line = document.createElementNS(NS, "path");
+      line.setAttribute("d", dLine); line.setAttribute("fill", "none");
+      line.setAttribute("stroke", "var(--chart)"); line.setAttribute("stroke-width", "2");
+      line.setAttribute("stroke-linejoin", "round"); line.setAttribute("stroke-linecap", "round");
+      line.setAttribute("vector-effect", "non-scaling-stroke");
+      svg.appendChild(line);
+      data.forEach(function (v, k) {
+        var hit = document.createElementNS(NS, "circle");
+        hit.setAttribute("cx", x(k)); hit.setAttribute("cy", y(v)); hit.setAttribute("r", "8");
+        hit.setAttribute("fill", "transparent");
+        var t = document.createElementNS(NS, "title");
+        t.textContent = MONTHS[k] + ": " + v.toLocaleString() + " Mcf";
+        hit.appendChild(t);
+        svg.appendChild(hit);
+      });
+      var end = document.createElementNS(NS, "circle");
+      end.setAttribute("cx", x(data.length - 1)); end.setAttribute("cy", y(data[data.length - 1]));
+      end.setAttribute("r", "3.4"); end.setAttribute("fill", "var(--chart-end)");
+      svg.appendChild(end);
+      var lbl = document.createElementNS(NS, "text");
+      lbl.setAttribute("x", x(data.length - 1) + 6);
+      lbl.setAttribute("y", Math.max(y(data[data.length - 1]) + 4, 12));
+      lbl.setAttribute("font-size", "10.5"); lbl.setAttribute("fill", "var(--muted)");
+      lbl.setAttribute("font-family", "inherit");
+      lbl.textContent = data[data.length - 1].toLocaleString();
+      svg.appendChild(lbl);
+    });
+  })();
+</script>
+</body>
+</html>
