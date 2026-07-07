@@ -7,6 +7,7 @@
 <title>Mineral View — Your Mineral Report (Mockup)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
     --teal:#00C4A7; --teal-dark:#00A38B; --teal-deep:#008F7A; --teal-soft:#E6F9F5;
@@ -109,6 +110,36 @@
   .src{border-top:1px solid var(--line);margin-top:50px;padding-top:18px;font-size:12.5px;color:var(--muted);font-weight:300}
   .src p{margin:6px 0;max-width:none}
   .src b{font-weight:600}
+
+  /* ===== MAP ===== */
+  #map{height:440px;border-radius:12px;border:1px solid var(--line);z-index:1}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+  .legend .lg-on{background:#008F7A}
+  .legend .lg-off{background:#9AA7A4}
+  .legend .lg-warn{background:#E08A2E}
+  .leaflet-popup-content{font-family:'Lexend Deca',sans-serif;font-size:13px;line-height:1.5}
+  .leaflet-popup-content b{font-size:13.5px}
+  .leaflet-popup-content .pc-sub{color:#7A8894;font-size:12px}
+
+  /* ===== ALERTS ===== */
+  .alertbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 4px}
+  .mailtoggle{display:flex;align-items:center;gap:9px;background:var(--teal-soft);border:1px solid #BFEDE3;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--teal-dark)}
+  .mailtoggle .knob{width:34px;height:19px;border-radius:999px;background:var(--teal);position:relative;flex-shrink:0}
+  .mailtoggle .knob::after{content:"";position:absolute;right:2.5px;top:2.5px;width:14px;height:14px;border-radius:50%;background:#fff}
+  .alert{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin:10px 0;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .alert .when{flex-shrink:0;width:86px;text-align:center;border-right:1px solid var(--line-soft);padding-right:14px}
+  .alert .when b{display:block;font-size:15px}
+  .alert .when small{color:var(--muted);font-weight:300;font-size:11.5px}
+  .alert .body{min-width:0}
+  .alert .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:6px;padding:2px 8px;margin-bottom:5px}
+  .alert .tag.permit{background:var(--teal-soft);color:var(--teal-dark)}
+  .alert .tag.prod{background:var(--amber-soft);color:var(--amber)}
+  .alert .tag.campaign{background:#EFF5FE;color:#3C6FD1}
+  .alert h4{font-size:15px;font-weight:600;margin:0 0 3px}
+  .alert p{margin:2px 0 0;font-size:13.5px;color:var(--muted);font-weight:300;max-width:66ch}
+  .alert p b{color:var(--ink);font-weight:600}
 </style>
 </head>
 <body>
@@ -122,7 +153,7 @@
       <a class="active" href="dossier.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Field Reports</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Activities</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
+      <a href="#map-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 15.2c2.8.2 5 1.9 5 4.8"/></svg>Community</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5c-2-1.5-5-1.5-8 0v14c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V5c-3-1.5-6-1.5-8 0z"/><path d="M12 5v14"/></svg>Knowledge Center</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-.9 1.7M12 17h.01"/></svg>FAQ</a>
@@ -169,6 +200,21 @@
 
         <p><b>What's going well:</b> your four Clear Creek leases in Johnson County and two of your Simmons Gas Unit leases in Goliad County are producing steadily, month after month.</p>
         <p><b>What deserves a look:</b> we couldn't find a production record matching your Morris lease in Marion County, and your Alvis lease hasn't produced since 2013. Details in the Marion County section below — neither needs urgent action, but both are worth checking against your paperwork.</p>
+      </section>
+
+      <section id="map-section">
+        <h2>Where your property sits</h2>
+        <p class="sub">Every dot is a well you hold an interest in, placed at its state-recorded location. Click a dot for details. Your holdings span South Texas (Goliad), North Texas (Johnson), and East Texas (Marion).</p>
+        <div id="map"></div>
+        <div class="legend">
+          <span><i class="lg-on"></i> Producing</span>
+          <span><i class="lg-off"></i> Inactive</span>
+          <span><i class="lg-warn"></i> Needs a look</span>
+          <span style="margin-left:auto">Well locations: Texas RRC records</span>
+        </div>
+        <div class="note warn" style="margin-top:14px">
+          <p><b>Notice the two orange dots in East Texas sitting 55 miles apart?</b> That's the Alvis question made visible: your claim places lease 15806 in Marion County (lower dot, "Alvis #1"), but the state's production record for that lease number points to the Bryans Mill Unit in Cass County (upper dot, "Well #20"). The map is why we suggest confirming this one against your paperwork.</p>
+        </div>
       </section>
 
       <section>
@@ -281,14 +327,68 @@
         <p>In April 2026 (the latest fully reported month), your share of the gas your producing leases reported was about <b>96 Mcf</b> — roughly 21 Mcf from Simmons tract 185204, 46 Mcf from Simmons tract 198686, and 29 Mcf across the four Clear Creek tracts. If the volumes on your royalty check stubs look very different from the state-reported figures over time, that's a fair question to raise with the operator.</p>
       </section>
 
-      <section>
-        <h2>Activity around your property</h2>
-        <ul>
-          <li><b>Goliad County:</b> your operator Aldine Oil &amp; Gas runs 225 leases across four South Texas counties, including Goliad. Your two active Simmons tracts are part of its core producing area.</li>
-          <li><b>Johnson County:</b> TEP Barnett continues to operate the Barnett Shale at scale — over 2,900 leases. Seven other leases operate within a mile of your Clear Creek tracts.</li>
-          <li><b>Marion County:</b> 7 leases operate within a mile of Morris and 11 within a mile of Alvis — the area is active even though these two records need confirming.</li>
-        </ul>
-        <p class="sub">In the full product, this section updates monthly: new drilling permits near your land, operator changes, and production shifts would appear here — and you'd get an email when something changes.</p>
+      <section id="alerts">
+        <h2>Activity alerts</h2>
+        <div class="alertbar">
+          <p class="sub" style="margin:0">Real filings and production changes near your property, from state records. Newest first.</p>
+          <div class="mailtoggle" style="margin-left:auto"><span>Email me when something changes</span><span class="knob"></span></div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>May 31</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag permit">New drill permit</span>
+            <h4>Halliburton filed to drill a new well in Johnson County</h4>
+            <p><b>Three Tracts #1</b> (Wildcat field) — a fresh new-drill permit in the county where your four Clear Creek wells sit. New drilling nearby is usually a sign of continued operator interest in the area.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>May 28</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag permit">Permit</span>
+            <h4>Recompletion permit filed in Goliad County</h4>
+            <p><b>Alta Vista #1</b> (Riverdale/Luling field), filed by Viper S.W.D. — routine activity, but it keeps Goliad on the active list alongside your Simmons Gas Unit tracts.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Apr 2026</b><small>production</small></div>
+          <div class="body">
+            <span class="tag prod">Production watch</span>
+            <h4>Clear Creek 228417 dipped in March, rebounded in April</h4>
+            <p>Reported gas fell to <b>1,218 Mcf in March</b> — about half its usual — then recovered to <b>2,256 Mcf in April</b>. A one-month dip with a rebound like this is typically maintenance, not decline. We'll keep watching it.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Mar 31</b><small>2026</small></div>
+          <div class="body">
+            <span class="tag permit">3 new permits</span>
+            <h4>TC Oil filed three permits on Duke Ranch, Goliad County</h4>
+            <p>Two <b>new drills</b> (Wildcat) and one <b>re-entry</b> (Sarco Creek) filed the same day — a meaningful burst of drilling interest in your Simmons Gas Unit's county.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>Oct–Dec</b><small>2025</small></div>
+          <div class="body">
+            <span class="tag campaign">Drilling campaign</span>
+            <h4>RFE Operating is drilling horizontals in Marion County</h4>
+            <p>At least <b>five horizontal new-drill permits</b> in the Woodlawn (Cotton Valley) field — the county of your Morris and Alvis tracts. State records show <b>11 permits on file within one mile of Morris</b> and 6 within a mile of Alvis. Rising activity here is one more reason to get those two records confirmed: active areas attract offers, and you'll want your paperwork straight first.</p>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="when"><b>TTM</b><small>trend</small></div>
+          <div class="body">
+            <span class="tag prod">Production watch</span>
+            <h4>Simmons 185204 is trending up</h4>
+            <p>Monthly gas is running roughly <b>a third higher than a year ago</b> (2,364 Mcf in April vs ~1,750 last summer) — unusual and welcome for a 25-year-old well; often a sign of operator workover attention.</p>
+          </div>
+        </div>
+
+        <p class="sub" style="margin-top:14px">Within a mile of your wells: 24–25 permits near Clear Creek (256853 / 258625), 11 near Morris, 6 near Alvis. In the full product these alerts refresh monthly and land in your inbox when something changes.</p>
       </section>
 
       <section>
@@ -311,11 +411,43 @@
   </div>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   if (sessionStorage.getItem('mv_demo') !== '1') {
     if (new URLSearchParams(location.search).get('demo') === '1') sessionStorage.setItem('mv_demo', '1');
     else location.href = 'login.html';
   }
+
+  // ===== Map: state-recorded well locations =====
+  (function () {
+    var WELLS = [
+      {lat:28.686601457, lon:-97.328714167, st:"on",  t:"Simmons Gas Unit — wells 1-U & 1-L", s:"Goliad County · Aldine Oil & Gas · tract 185204 producing, 174752 inactive"},
+      {lat:28.689383587, lon:-97.325820198, st:"on",  t:"Simmons Gas Unit — wells 5-U & 5L", s:"Goliad County · Aldine Oil & Gas · tract 198686 producing, 180299 inactive"},
+      {lat:32.546788335, lon:-97.450782130, st:"on",  t:"Clear Creek #1H (tract 228417)", s:"Johnson County · TEP Barnett · producing"},
+      {lat:32.546443279, lon:-97.446339857, st:"on",  t:"Clear Creek #5H (tract 247371)", s:"Johnson County · TEP Barnett · producing"},
+      {lat:32.545485403, lon:-97.437026506, st:"on",  t:"Clear Creek #6H (tract 256853)", s:"Johnson County · TEP Barnett · producing · 24 permits within 1 mile"},
+      {lat:32.546257196, lon:-97.439045154, st:"on",  t:"Clear Creek #7H (tract 258625)", s:"Johnson County · TEP Barnett · producing · 25 permits within 1 mile"},
+      {lat:32.759639903, lon:-94.583995785, st:"warn", t:"Morris #1H (lease 15728)", s:"Marion County · your claim location · no production record found · 11 permits within 1 mile"},
+      {lat:32.742381061, lon:-94.583746646, st:"warn", t:"Alvis #1 (lease 15806)", s:"Marion County · your claim location · 6 permits within 1 mile"},
+      {lat:33.234372289, lon:-94.472534201, st:"warn", t:"Bryans Mill Unit #20", s:"Cass County · where the STATE record for lease 15806 points · inactive since 2013"}
+    ];
+    var COLOR = {on:"#008F7A", off:"#9AA7A4", warn:"#E08A2E"};
+    var map = L.map("map", {scrollWheelZoom:false});
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:17}).addTo(map);
+    var bounds = [];
+    WELLS.forEach(function (w) {
+      bounds.push([w.lat, w.lon]);
+      L.circleMarker([w.lat, w.lon], {
+        radius:8, color:"#fff", weight:2, fillColor:COLOR[w.st], fillOpacity:.95
+      }).addTo(map).bindPopup("<b>" + w.t + "</b><br><span class='pc-sub'>" + w.s + "</span>");
+    });
+    // 1-mile radius rings on the "needs a look" tracts
+    [[32.759639903,-94.583995785],[32.742381061,-94.583746646]].forEach(function (c) {
+      L.circle(c, {radius:1609, color:"#E08A2E", weight:1.5, dashArray:"5 5", fill:false}).addTo(map);
+    });
+    map.fitBounds(bounds, {padding:[36, 36]});
+  })();
 
   (function () {
     var MONTHS = ["May '25","Jun '25","Jul '25","Aug '25","Sep '25","Oct '25","Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26"];
