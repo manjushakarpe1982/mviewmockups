@@ -85,6 +85,21 @@
   .viewrep{display:inline-block;margin-top:16px;background:var(--teal);color:#fff;font-weight:700;border-radius:10px;padding:12px 24px;font-size:15px;box-shadow:0 2px 12px rgba(0,196,167,.4)}
   .viewrep:hover{background:var(--teal-dark)}
 
+  /* ===== ACTIVITY STRIP ===== */
+  .actstrip{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-top:18px;padding:16px 20px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .ast-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .ast-head b{font-size:16.5px}
+  .ast-head a{font-size:13px;font-weight:600;color:var(--teal-dark)}
+  .ast-head a:hover{text-decoration:underline}
+  .ast-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+  .ast{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:.13s}
+  .ast:hover{border-color:var(--teal);background:var(--teal-soft)}
+  .ast .d{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+  .ast .tg{align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--teal-soft);color:var(--teal-dark);border-radius:6px;padding:2px 8px}
+  .ast .tg.warn{background:var(--amber-soft);color:var(--amber)}
+  .ast .tx{font-size:13px;color:var(--muted);font-weight:300;line-height:1.45}
+  .ast .tx b{color:var(--ink);font-weight:600}
+
   /* ===== LEASES ===== */
   .leasebox{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-top:18px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
   .tabs{display:flex;gap:6px;padding:14px 18px 0}
@@ -122,7 +137,7 @@
       <a href="dossier.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Field Reports</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Activities</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
+      <a href="dossier.html#map-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 15.2c2.8.2 5 1.9 5 4.8"/></svg>Community</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5c-2-1.5-5-1.5-8 0v14c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V5c-3-1.5-6-1.5-8 0z"/><path d="M12 5v14"/></svg>Knowledge Center</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-.9 1.7M12 17h.01"/></svg>FAQ</a>
@@ -138,7 +153,7 @@
         <div class="t"><div class="n">WTI Crude</div><div class="v">$69.35<em>▲ 1.17%</em></div></div>
       </div>
       <div class="right">
-        <div class="ic">🔔</div>
+        <a class="ic" href="dossier.html#alerts" title="4 activity alerts" style="position:relative">🔔<span style="position:absolute;top:-4px;right:-4px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;border-radius:999px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center">4</span></a>
         <span class="hi">Hi, Shannon</span>
         <span class="logout" onclick="sessionStorage.removeItem('mv_demo');location.href='login.html'">Log out</span>
       </div>
@@ -177,6 +192,15 @@
             <div class="pt warn"><span><b>2 items need your attention</b> in Marion County</span></div>
           </div>
           <a class="viewrep" href="dossier.html">View My Report →</a>
+        </div>
+      </div>
+
+      <div class="actstrip">
+        <div class="ast-head"><b>Activity near your property</b><a href="dossier.html#alerts">See all alerts →</a></div>
+        <div class="ast-row">
+          <a class="ast" href="dossier.html#alerts"><span class="d">May 31</span><span class="tg">New permit</span><span class="tx"><b>Halliburton</b> filed a new-drill permit in Johnson Co., near your Clear Creek wells</span></a>
+          <a class="ast" href="dossier.html#alerts"><span class="d">Mar 31</span><span class="tg">3 permits</span><span class="tx"><b>TC Oil</b> filed three Duke Ranch permits in Goliad Co., near Simmons Gas Unit</span></a>
+          <a class="ast" href="dossier.html#alerts"><span class="d">Q4 '25</span><span class="tg warn">Campaign</span><span class="tx"><b>RFE Operating</b> drilling horizontals in Marion Co. — 11 permits within 1 mi of Morris</span></a>
         </div>
       </div>
 
