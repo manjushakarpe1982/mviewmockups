@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mineral View — Dashboard (Mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#00C4A7; --teal-dark:#00A38B; --teal-deep:#008F7A; --teal-soft:#E6F9F5;
+    --navy:#0B1220; --navy-2:#101A2C; --ink:#22313F; --muted:#7A8894; --line:#E3E8EC;
+    --mint-bg:#F4FBF9; --orange:#FF7A1A; --amber:#B45309; --amber-soft:#FBEEDC;
+    --up:#0C9D61; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Lexend Deca','Segoe UI',system-ui,sans-serif;background:var(--mint-bg);color:var(--ink);min-height:100vh;font-size:15.5px}
+  a{text-decoration:none;color:inherit}
+
+  .app{display:flex;min-height:100vh}
+
+  /* ===== SIDEBAR ===== */
+  .side{width:236px;background:var(--navy);color:#C9D4DE;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .side .logo{display:flex;align-items:center;gap:9px;padding:20px 18px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .side .logo .mark{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 200deg,#00C4A7,#7CE577,#00C4A7);display:flex;align-items:center;justify-content:center;color:#0B1220;font-weight:800;font-size:13px;flex-shrink:0}
+  .side .logo b{font-size:15.5px;letter-spacing:.05em;color:#fff}
+  .side .logo b span{color:var(--teal)}
+  .nav{padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;font-size:14.5px;font-weight:500;color:#C9D4DE;transition:.13s}
+  .nav a svg{width:18px;height:18px;flex-shrink:0;opacity:.85}
+  .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav a.active{background:var(--teal);color:#fff;font-weight:600}
+  .nav a .new{margin-left:auto;background:var(--orange);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.06em;border-radius:6px;padding:2px 6px}
+
+  /* ===== HEADER ===== */
+  .main{flex:1;min-width:0}
+  .top{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:stretch;position:sticky;top:0;z-index:40}
+  .tick{display:flex}
+  .tick .t{padding:12px 22px;border-right:1px solid var(--line)}
+  .tick .t .n{font-size:13px;color:var(--muted);font-weight:500}
+  .tick .t .v{font-size:15.5px;font-weight:700}
+  .tick .t .v em{font-style:normal;font-size:12px;color:var(--up);margin-left:6px}
+  .top .right{margin-left:auto;display:flex;align-items:center;gap:18px;padding:0 24px}
+  .top .hi{font-weight:600;font-size:15px}
+  .top .ic{width:34px;height:34px;border-radius:50%;background:var(--mint-bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+  .logout{font-size:12.5px;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+  .logout:hover{color:var(--ink);border-color:var(--muted)}
+
+  .content{padding:22px 26px 60px;max-width:1180px}
+
+  /* ===== OWNER BAR ===== */
+  .ownerbar{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .ownerbar .sel .lab{font-size:11.5px;letter-spacing:.14em;font-weight:700;color:var(--teal-dark);text-transform:uppercase}
+  .ownerbar .sel .lab::before{content:"●";margin-right:6px}
+  .ownerbar .sel h2{font-size:21px;margin-top:2px}
+  .ownerbar .sel small{display:block;color:var(--muted);font-weight:300;font-size:12.5px;margin-top:1px}
+  .chiprow{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+  .bigchip{display:flex;align-items:center;gap:9px;background:var(--mint-bg);border:1px solid var(--line);border-radius:12px;padding:9px 16px;font-size:14px;font-weight:500}
+  .bigchip b{background:var(--teal-soft);color:var(--teal-dark);border-radius:8px;padding:2px 9px;font-size:14px}
+  .switch{border:1.5px solid var(--teal);color:var(--teal-dark);font-weight:600;border-radius:10px;padding:10px 18px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
+  .switch:hover{background:var(--teal-soft)}
+
+  /* ===== CARDS ROW ===== */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+  @media (max-width:900px){.cards{grid-template-columns:1fr}}
+  .cardx{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .cardx .head{display:flex;align-items:center;gap:10px}
+  .cardx h3{font-size:22px}
+  .pill{margin-left:auto;background:var(--teal-soft);color:var(--teal-dark);font-weight:700;border-radius:10px;padding:6px 14px;font-size:14px}
+  .cardx .sub{color:var(--muted);font-weight:300;font-size:14px;margin-top:8px}
+  .mv{font-size:40px;font-weight:800;color:var(--teal-dark);margin:14px 0 2px}
+  .mv em{font-style:normal;font-size:14px;color:var(--muted);font-weight:400;margin-left:8px}
+  .cardx .foot{border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:13.5px;color:var(--muted);font-weight:300}
+  .cardx .foot a{color:var(--teal-dark);font-weight:600;text-decoration:underline}
+
+  .repcard{position:relative;overflow:hidden}
+  .repcard::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,167,.12),transparent 70%)}
+  .newtag{background:var(--orange);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;border-radius:6px;padding:3px 8px}
+  .rep-points{margin:14px 0 4px;display:flex;flex-direction:column;gap:9px}
+  .rep-points .pt{display:flex;gap:10px;font-size:14.5px;align-items:baseline}
+  .rep-points .pt::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;transform:translateY(-1px)}
+  .rep-points .pt.warn::before{background:var(--amber)}
+  .rep-points .pt b{font-weight:600}
+  .viewrep{display:inline-block;margin-top:16px;background:var(--teal);color:#fff;font-weight:700;border-radius:10px;padding:12px 24px;font-size:15px;box-shadow:0 2px 12px rgba(0,196,167,.4)}
+  .viewrep:hover{background:var(--teal-dark)}
+
+  /* ===== LEASES ===== */
+  .leasebox{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-top:18px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
+  .tabs{display:flex;gap:6px;padding:14px 18px 0}
+  .tabs span{padding:10px 18px;border-radius:10px 10px 0 0;font-weight:600;font-size:15.5px;color:var(--muted);cursor:pointer}
+  .tabs span.on{background:var(--teal-soft);color:var(--teal-dark);border:1px solid var(--line);border-bottom:none}
+  .tablewrap{overflow-x:auto;padding:0 18px 18px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:820px}
+  thead th{background:var(--teal);color:#fff;text-align:left;padding:12px 14px;font-size:13px;font-weight:600;letter-spacing:.02em}
+  thead th:first-child{border-radius:10px 0 0 10px}
+  thead th:last-child{border-radius:0 10px 10px 0}
+  tbody td{padding:13px 14px;border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-weight:700;color:var(--teal-dark);font-variant-numeric:tabular-nums}
+  td .st{display:inline-block;font-size:11px;font-weight:600;border-radius:8px;padding:2px 8px;margin-left:8px;vertical-align:1px}
+  td .st.on{background:var(--teal-soft);color:var(--teal-dark)}
+  td .st.off{background:#EEF1F3;color:var(--muted)}
+  td .st.warn{background:var(--amber-soft);color:var(--amber)}
+  .acts{display:flex;gap:7px}
+  .acts a{width:30px;height:30px;border-radius:8px;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .acts .i1{border-color:#8FD9CD;color:#00A38B;background:#EFFBF8}
+  .acts .i2{border-color:#9DBFF3;color:#3C6FD1;background:#EFF5FE}
+  .acts .i3{border-color:#C9B2EA;color:#7C4FC4;background:#F6F0FD}
+  .acts .i3:hover{box-shadow:0 0 0 3px rgba(124,79,196,.15)}
+  .mocknote{padding:0 26px 30px;font-size:11.5px;color:#A8B3BC;font-weight:300}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="logo"><div class="mark">M</div><b>MINERAL <span>VIEW</span></b></div>
+    <nav class="nav">
+      <a class="active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v13H4z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>My Portfolio</a>
+      <a href="dossier.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Field Reports</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Activities</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 15.2c2.8.2 5 1.9 5 4.8"/></svg>Community</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5c-2-1.5-5-1.5-8 0v14c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V5c-3-1.5-6-1.5-8 0z"/><path d="M12 5v14"/></svg>Knowledge Center</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-.9 1.7M12 17h.01"/></svg>FAQ</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact Us</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="tick">
+        <div class="t"><div class="n">Brent Oil</div><div class="v">$72.86<em>▲ 1.21%</em></div></div>
+        <div class="t"><div class="n">Natural Gas</div><div class="v">$3.291<em>▲ 1.42%</em></div></div>
+        <div class="t"><div class="n">WTI Crude</div><div class="v">$69.35<em>▲ 1.17%</em></div></div>
+      </div>
+      <div class="right">
+        <div class="ic">🔔</div>
+        <span class="hi">Hi, Shannon</span>
+        <span class="logout" onclick="sessionStorage.removeItem('mv_demo');location.href='login.html'">Log out</span>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <div class="ownerbar">
+        <div class="sel">
+          <div class="lab">Selected owner</div>
+          <h2>Shannon D.</h2>
+          <small>Sample owner · real Texas RRC data</small>
+        </div>
+        <div class="chiprow">
+          <div class="bigchip"><b>6</b> Producing Leases</div>
+          <div class="bigchip"><b>4</b> Inactive Leases</div>
+          <div class="bigchip"><b>3</b> Counties</div>
+        </div>
+        <button class="switch">⟳ Switch Owner</button>
+      </div>
+
+      <div class="cards">
+        <div class="cardx">
+          <div class="head"><h3>MVestimate <span style="color:var(--muted);font-size:14px">ⓘ</span></h3><span class="pill">10 Leases</span></div>
+          <p class="sub">You are viewing the MVestimate for the selected mineral owner.</p>
+          <div class="mv">$5,530,994<em>(0%) Today</em></div>
+          <div class="foot">Projected six-year earnings across the full leases you hold an interest in. <a href="dossier.html">Read more</a></div>
+        </div>
+
+        <div class="cardx repcard">
+          <div class="head"><h3>Your Mineral Report</h3><span class="newtag">NEW · JULY 2026</span></div>
+          <p class="sub">Your personal report is ready — everything about your minerals, already analyzed and written in plain English.</p>
+          <div class="rep-points">
+            <div class="pt"><span><b>6 wells producing steadily</b> across Goliad &amp; Johnson counties</span></div>
+            <div class="pt"><span>Your share estimated at <b>$19,500 – $26,100</b></span></div>
+            <div class="pt warn"><span><b>2 items need your attention</b> in Marion County</span></div>
+          </div>
+          <a class="viewrep" href="dossier.html">View My Report →</a>
+        </div>
+      </div>
+
+      <div class="leasebox">
+        <div class="tabs"><span class="on">My Leases</span><span>Financials</span><span>Monthly Reports</span></div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Lease Name</th><th>County</th><th>Current Operator</th><th>Field / Play</th><th>MVestimate</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Simmons Gas Unit (198686)<span class="st on">Producing</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$1,077,148</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Simmons Gas Unit (185204)<span class="st on">Producing</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$483,606</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Clear Creek (256853)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,465,132</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Clear Creek (258625)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,219,855</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Clear Creek (247371)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,024,967</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Clear Creek (228417)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$260,286</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Simmons Gas Unit (174752)<span class="st off">Inactive</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Simmons Gas Unit (180299)<span class="st off">Inactive</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Morris (15728)<span class="st warn">Needs a look</span></td><td>Marion</td><td>—</td><td>No state record found</td><td class="num">—</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Alvis (15806)<span class="st warn">Needs a look</span></td><td>Marion</td><td>Sulphur River Exploration</td><td>Bryans Mill (Smackover)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <p class="mocknote">Internal UI mockup · sample data (real Texas RRC records, demo owner) · MVestimate figures are whole-lease model values, not the owner's share.</p>
+  </div>
+</div>
+<script>
+  if (sessionStorage.getItem('mv_demo') !== '1') {
+    if (new URLSearchParams(location.search).get('demo') === '1') sessionStorage.setItem('mv_demo', '1');
+    else location.href = 'login.html';
+  }
+</script>
+</body>
+</html>
