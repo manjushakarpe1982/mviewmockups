@@ -45,6 +45,7 @@
   .top .hi{font-weight:600;font-size:15px}
   .logout{font-size:12.5px;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
   .logout:hover{color:var(--ink);border-color:var(--muted)}
+  .ownersel{font-family:inherit;font-size:13px;font-weight:600;color:var(--teal-dark);border:1.5px solid var(--teal);border-radius:9px;padding:7px 10px;background:#fff;cursor:pointer}
 
   /* ===== REPORT ===== */
   .content{padding:24px 30px 70px;max-width:920px;margin:0 auto}
@@ -176,6 +177,10 @@
         <div class="t"><div class="n">WTI Crude</div><div class="v">$69.35<em>▲ 1.17%</em></div></div>
       </div>
       <div class="right">
+        <select class="ownersel" onchange="location.href=this.value" title="Switch owner">
+          <option value="dossier.html" selected>Owner: Shannon D.</option>
+          <option value="dossier-ryan.html">Owner: Ryan C.</option>
+        </select>
         <span class="hi">Hi, Shannon</span>
         <span class="logout" onclick="sessionStorage.removeItem('mv_demo');location.href='login.html'">Log out</span>
       </div>

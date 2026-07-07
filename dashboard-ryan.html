@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mineral View — Dashboard (Mockup)</title>
+<title>Mineral View — Dashboard: Ryan C. (Mockup)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -17,10 +17,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Lexend Deca','Segoe UI',system-ui,sans-serif;background:var(--mint-bg);color:var(--ink);min-height:100vh;font-size:15.5px}
   a{text-decoration:none;color:inherit}
-
   .app{display:flex;min-height:100vh}
-
-  /* ===== SIDEBAR ===== */
   .side{width:236px;background:var(--navy);color:#C9D4DE;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
   .side .logo{display:flex;align-items:center;gap:9px;padding:20px 18px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
   .side .logo .mark{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 200deg,#00C4A7,#7CE577,#00C4A7);display:flex;align-items:center;justify-content:center;color:#0B1220;font-weight:800;font-size:13px;flex-shrink:0}
@@ -32,8 +29,6 @@
   .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
   .nav a.active{background:var(--teal);color:#fff;font-weight:600}
   .nav a .new{margin-left:auto;background:var(--orange);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.06em;border-radius:6px;padding:2px 6px}
-
-  /* ===== HEADER ===== */
   .main{flex:1;min-width:0}
   .top{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:stretch;position:sticky;top:0;z-index:40}
   .tick{display:flex}
@@ -46,10 +41,7 @@
   .top .ic{width:34px;height:34px;border-radius:50%;background:var(--mint-bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted)}
   .logout{font-size:12.5px;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
   .logout:hover{color:var(--ink);border-color:var(--muted)}
-
   .content{padding:22px 26px 60px;max-width:1180px;margin:0 auto}
-
-  /* ===== OWNER BAR ===== */
   .ownerbar{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(13,27,42,.05)}
   .ownerbar .sel .lab{font-size:11.5px;letter-spacing:.14em;font-weight:700;color:var(--teal-dark);text-transform:uppercase}
   .ownerbar .sel .lab::before{content:"●";margin-right:6px}
@@ -58,10 +50,7 @@
   .chiprow{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
   .bigchip{display:flex;align-items:center;gap:9px;background:var(--mint-bg);border:1px solid var(--line);border-radius:12px;padding:9px 16px;font-size:14px;font-weight:500}
   .bigchip b{background:var(--teal-soft);color:var(--teal-dark);border-radius:8px;padding:2px 9px;font-size:14px}
-  .switch{border:1.5px solid var(--teal);color:var(--teal-dark);font-weight:600;border-radius:10px;padding:10px 18px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
-  .switch:hover{background:var(--teal-soft)}
-
-  /* ===== CARDS ROW ===== */
+  .switch{border:1.5px solid var(--teal);color:var(--teal-dark);font-weight:600;border-radius:10px;padding:10px 14px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px}
   .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
   @media (max-width:900px){.cards{grid-template-columns:1fr}}
   .cardx{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
@@ -73,7 +62,6 @@
   .mv em{font-style:normal;font-size:14px;color:var(--muted);font-weight:400;margin-left:8px}
   .cardx .foot{border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:13.5px;color:var(--muted);font-weight:300}
   .cardx .foot a{color:var(--teal-dark);font-weight:600;text-decoration:underline}
-
   .repcard{position:relative;overflow:hidden}
   .repcard::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,167,.12),transparent 70%)}
   .newtag{background:var(--orange);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;border-radius:6px;padding:3px 8px}
@@ -84,8 +72,6 @@
   .rep-points .pt b{font-weight:600}
   .viewrep{display:inline-block;margin-top:16px;background:var(--teal);color:#fff;font-weight:700;border-radius:10px;padding:12px 24px;font-size:15px;box-shadow:0 2px 12px rgba(0,196,167,.4)}
   .viewrep:hover{background:var(--teal-dark)}
-
-  /* ===== ACTIVITY STRIP ===== */
   .actstrip{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-top:18px;padding:16px 20px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
   .ast-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
   .ast-head b{font-size:16.5px}
@@ -99,8 +85,6 @@
   .ast .tg.warn{background:var(--amber-soft);color:var(--amber)}
   .ast .tx{font-size:13px;color:var(--muted);font-weight:300;line-height:1.45}
   .ast .tx b{color:var(--ink);font-weight:600}
-
-  /* ===== LEASES ===== */
   .leasebox{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-top:18px;box-shadow:0 1px 4px rgba(13,27,42,.05)}
   .tabs{display:flex;gap:6px;padding:14px 18px 0}
   .tabs span{padding:10px 18px;border-radius:10px 10px 0 0;font-weight:600;font-size:15.5px;color:var(--muted);cursor:pointer}
@@ -122,7 +106,6 @@
   .acts .i1{border-color:#8FD9CD;color:#00A38B;background:#EFFBF8}
   .acts .i2{border-color:#9DBFF3;color:#3C6FD1;background:#EFF5FE}
   .acts .i3{border-color:#C9B2EA;color:#7C4FC4;background:#F6F0FD}
-  .acts .i3:hover{box-shadow:0 0 0 3px rgba(124,79,196,.15)}
   .mocknote{padding:0 26px 30px;font-size:11.5px;color:#A8B3BC;font-weight:300}
 </style>
 </head>
@@ -132,12 +115,12 @@
   <aside class="side">
     <div class="logo"><div class="mark">M</div><b>MINERAL <span>VIEW</span></b></div>
     <nav class="nav">
-      <a class="active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
+      <a class="active" href="dashboard-ryan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v13H4z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>My Portfolio</a>
-      <a href="dossier.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
+      <a href="dossier-ryan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h7M9 17h7"/></svg>My Report<span class="new">NEW</span></a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Field Reports</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Activities</a>
-      <a href="dossier.html#map-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
+      <a href="dossier-ryan.html#map-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>Map</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 15.2c2.8.2 5 1.9 5 4.8"/></svg>Community</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5c-2-1.5-5-1.5-8 0v14c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V5c-3-1.5-6-1.5-8 0z"/><path d="M12 5v14"/></svg>Knowledge Center</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-.9 1.7M12 17h.01"/></svg>FAQ</a>
@@ -153,8 +136,8 @@
         <div class="t"><div class="n">WTI Crude</div><div class="v">$69.35<em>▲ 1.17%</em></div></div>
       </div>
       <div class="right">
-        <a class="ic" href="dossier.html#alerts" title="4 activity alerts" style="position:relative">🔔<span style="position:absolute;top:-4px;right:-4px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;border-radius:999px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center">5</span></a>
-        <span class="hi">Hi, Shannon</span>
+        <a class="ic" href="dossier-ryan.html#alerts" title="4 activity alerts" style="position:relative">🔔<span style="position:absolute;top:-4px;right:-4px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;border-radius:999px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center">4</span></a>
+        <span class="hi">Hi, Ryan</span>
         <span class="logout" onclick="sessionStorage.removeItem('mv_demo');location.href='login.html'">Log out</span>
       </div>
     </header>
@@ -164,46 +147,46 @@
       <div class="ownerbar">
         <div class="sel">
           <div class="lab">Selected owner</div>
-          <h2>Shannon D.</h2>
+          <h2>Ryan C.</h2>
           <small>Sample owner · real Texas RRC data</small>
         </div>
         <div class="chiprow">
-          <div class="bigchip"><b>6</b> Producing Leases</div>
-          <div class="bigchip"><b>4</b> Inactive Leases</div>
-          <div class="bigchip"><b>3</b> Counties</div>
+          <div class="bigchip"><b>46</b> Producing Leases</div>
+          <div class="bigchip"><b>59</b> Inactive / No Record</div>
+          <div class="bigchip"><b>18</b> Counties</div>
         </div>
         <select class="switch" onchange="location.href=this.value" title="Switch owner">
-          <option value="dashboard.html" selected>⟳ Shannon D.</option>
-          <option value="dashboard-ryan.html">⟳ Ryan C.</option>
+          <option value="dashboard.html">⟳ Shannon D.</option>
+          <option value="dashboard-ryan.html" selected>⟳ Ryan C.</option>
         </select>
       </div>
 
       <div class="cards">
         <div class="cardx">
-          <div class="head"><h3>MVestimate <span style="color:var(--muted);font-size:14px">ⓘ</span></h3><span class="pill">10 Leases</span></div>
+          <div class="head"><h3>MVestimate <span style="color:var(--muted);font-size:14px">ⓘ</span></h3><span class="pill">105 Leases</span></div>
           <p class="sub">You are viewing the MVestimate for the selected mineral owner.</p>
-          <div class="mv">$5,530,994<em>(0%) Today</em></div>
-          <div class="foot">Projected six-year earnings across the full leases you hold an interest in. <a href="dossier.html">Read more</a></div>
+          <div class="mv">$42,058,986<em>(0%) Today</em></div>
+          <div class="foot">Projected six-year earnings across the full leases you hold an interest in (one lease excluded pending a valuation-model fix). <a href="dossier-ryan.html">Read more</a></div>
         </div>
 
         <div class="cardx repcard">
           <div class="head"><h3>Your Mineral Report</h3><span class="newtag">NEW · JULY 2026</span></div>
           <p class="sub">Your personal report is ready — everything about your minerals, already analyzed and written in plain English.</p>
           <div class="rep-points">
-            <div class="pt"><span><b>6 wells producing steadily</b> across Goliad &amp; Johnson counties</span></div>
-            <div class="pt"><span>Your share estimated at <b>$19,500 – $26,100</b></span></div>
-            <div class="pt warn"><span><b>2 items need your attention</b> in Marion County</span></div>
+            <div class="pt"><span><b>46 wells producing</b> — 45 operated by Magnolia (Giddings &amp; Eagle Ford)</span></div>
+            <div class="pt"><span>Your share estimated at <b>$9.3M – $13.2M</b></span></div>
+            <div class="pt warn"><span><b>3 items need your attention</b> — incl. your largest holding's spring dip</span></div>
           </div>
-          <a class="viewrep" href="dossier.html">View My Report →</a>
+          <a class="viewrep" href="dossier-ryan.html">View My Report →</a>
         </div>
       </div>
 
       <div class="actstrip">
-        <div class="ast-head"><b>Activity near your property</b><a href="dossier.html#alerts">See all alerts →</a></div>
+        <div class="ast-head"><b>Activity near your property</b><a href="dossier-ryan.html#alerts">See all alerts →</a></div>
         <div class="ast-row">
-          <a class="ast" href="dossier.html#alerts"><span class="d">Jun 17</span><span class="tg">2 new permits</span><span class="tx"><b>RFE Operating</b> filed two more horizontals near your Marion Co. tracts</span></a>
-          <a class="ast" href="dossier.html#alerts"><span class="d">May 31</span><span class="tg">New permit</span><span class="tx"><b>Halliburton</b> filed a new-drill permit ~15 mi from your Clear Creek wells</span></a>
-          <a class="ast" href="dossier.html#alerts"><span class="d">Mar 31</span><span class="tg">3 permits</span><span class="tx"><b>TC Oil</b> filed three Duke Ranch permits in Goliad Co., near Simmons Gas Unit</span></a>
+          <a class="ast" href="dossier-ryan.html#alerts"><span class="d">Jul 1</span><span class="tg">6 new permits</span><span class="tx"><b>Magnolia</b> filed six new drills in Washington Co., where you hold 7 leases</span></a>
+          <a class="ast" href="dossier-ryan.html#alerts"><span class="d">Apr</span><span class="tg warn">Production watch</span><span class="tx"><b>Dierking Unit</b> (your largest holding) fell to 4,131 Mcf vs ~11,500 average</span></a>
+          <a class="ast" href="dossier-ryan.html#alerts"><span class="d">Jun 5–22</span><span class="tg">Drilling wave</span><span class="tx"><b>Karnes Co.</b>: Magnolia, Marathon &amp; Burlington all filed new horizontals — 73 permits YTD</span></a>
         </div>
       </div>
 
@@ -215,19 +198,20 @@
               <tr><th>Lease Name</th><th>County</th><th>Current Operator</th><th>Field / Play</th><th>MVestimate</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr><td>Simmons Gas Unit (198686)<span class="st on">Producing</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$1,077,148</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Simmons Gas Unit (185204)<span class="st on">Producing</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$483,606</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Clear Creek (256853)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,465,132</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Clear Creek (258625)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,219,855</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Clear Creek (247371)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$1,024,967</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Clear Creek (228417)<span class="st on">Producing</span></td><td>Johnson</td><td>TEP Barnett USA, LLC</td><td>Barnett Shale</td><td class="num">$260,286</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Simmons Gas Unit (174752)<span class="st off">Inactive</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Simmons Gas Unit (180299)<span class="st off">Inactive</span></td><td>Goliad</td><td>Aldine Oil &amp; Gas, LP</td><td>Austin (Wilcox)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Morris (15728)<span class="st warn">Needs a look</span></td><td>Marion</td><td>—</td><td>No state record found</td><td class="num">—</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
-              <tr><td>Alvis (15806)<span class="st warn">Needs a look</span></td><td>Marion</td><td>Sulphur River Exploration</td><td>Bryans Mill (Smackover)</td><td class="num">$0</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Rambo (287778)<span class="st on">Producing</span></td><td>Fayette</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$4,138,324</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Jahn Unit (292128)<span class="st on">Producing</span></td><td>De Witt</td><td>Magnolia Oil &amp; Gas</td><td>Eagleville (Eagle Ford-2)</td><td class="num">$3,481,545</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Jahn Unit (292127)<span class="st on">Producing</span></td><td>De Witt</td><td>Magnolia Oil &amp; Gas</td><td>Eagleville (Eagle Ford-2)</td><td class="num">$3,101,086</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Dierking Unit (174174)<span class="st warn">Watch</span></td><td>Austin</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$2,871,423</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Broussard-Liebscher Co-op (289184)<span class="st on">Producing</span></td><td>Washington</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$2,554,656</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Liger Unit (288442)<span class="st on">Producing</span></td><td>Washington</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$2,004,227</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Tango (285821)<span class="st on">Producing</span></td><td>Fayette</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$1,912,924</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Jahn Unit (294809)<span class="st on">Producing</span></td><td>De Witt</td><td>Magnolia Oil &amp; Gas</td><td>Eagleville (Eagle Ford-2)</td><td class="num">$1,886,295</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Longstreet Unit (254077)<span class="st on">Producing</span></td><td>Montgomery</td><td>Magnolia Oil &amp; Gas</td><td>Giddings (Austin Chalk)</td><td class="num">$1,698,053</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
+              <tr><td>Crow A (289345)<span class="st on">Producing</span></td><td>Karnes</td><td>BPX Operating</td><td>Eagleville (Eagle Ford-2)</td><td class="num">$1,643,330</td><td><div class="acts"><a class="i1" href="#" title="Details">i</a><a class="i2" href="#" title="Map">◎</a><a class="i3" href="dossier-ryan.html" title="View in report">▤</a></div></td></tr>
             </tbody>
           </table>
         </div>
+        <p class="mocknote" style="padding:0 18px 16px">Showing your 10 largest leases by whole-lease MVestimate — 95 more in <a href="dossier-ryan.html" style="color:var(--teal-dark);font-weight:600">your report</a>.</p>
       </div>
 
     </div>
